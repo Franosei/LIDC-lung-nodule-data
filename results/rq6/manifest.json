@@ -1,0 +1,61 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "a9299b6df9120602edc03e9225ea96a3739d8a8462114c44476e2a7419c43276",
+  "created_at_utc": "2026-10-19T19:43:16.087337+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4"
+  },
+  "method": {
+    "candidate_classes": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "posterior_threshold": 0.5,
+    "random_starts": 30,
+    "rater_assumption": "exchangeable_and_conditionally_independent",
+    "selected_classes": 3,
+    "selection": "minimum_bic"
+  },
+  "outputs": {
+    "class_summary": {
+      "path": "results\\rq6\\class_summary.csv",
+      "sha256": "90548138154b44572b8d2c2fa278693a37bca2b8a60717bab6de3a4b151aa7c2"
+    },
+    "model_selection": {
+      "path": "results\\rq6\\model_selection.csv",
+      "sha256": "66ed89ae26f7e4ac97df37e68b6e2ecfe73864f3ce6cf228f2a4f1ce7b646fc6"
+    },
+    "posterior": {
+      "path": "results\\rq6\\posterior.parquet",
+      "sha256": "1f7110e8ec03f2fbc6829c619a71a9438ce929373ecc5868b750b7f254727640"
+    },
+    "rating_probabilities": {
+      "path": "results\\rq6\\rating_probabilities.csv",
+      "sha256": "d02ba4116340ec9cf0ccfbfa3854f391066f4ea380fddb3b65943fdbf5a9bc4f"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "nodules": 1378,
+    "patients": 690,
+    "ratings": 5031
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq6"
+}

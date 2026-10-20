@@ -1,0 +1,136 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "5c7bb6d2886dafe24b1390376f613985bb37d91c1c2e80876aac051fb11a3971",
+  "created_at_utc": "2026-10-20T04:14:39.502234+00:00",
+  "dpi": 600,
+  "figure": "figure_1_main",
+  "formats": [
+    "pdf",
+    "svg",
+    "png",
+    "tiff"
+  ],
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "rq1": {
+      "path": "results\\rq1\\summary.csv",
+      "sha256": "fd35a689439c70f54655e6e38e9fbe0a0481ec4b92a324c19c0a7054b4b154f0"
+    },
+    "rq2": {
+      "path": "results\\rq2\\fixed_reference_comparison.csv",
+      "sha256": "e32d1640c1da7cf333f5f01160e8980f334bdd7a7a56d034c0a1e203fc1a63eb"
+    },
+    "rq2_performance": {
+      "path": "results\\rq2\\performance.csv",
+      "sha256": "6ac60d53813f24d0a7081aa06dd69edbf69cb34a47fb126e605d39a50718b0a6"
+    },
+    "rq3": {
+      "path": "results\\rq3\\auc_comparisons.csv",
+      "sha256": "edec89d352e6fd2628c7c42226a52050ed9c3e86841c954fae26b1b4479b5f56"
+    },
+    "rq4_panel": {
+      "path": "results\\rq4\\panel_summary.csv",
+      "sha256": "8f66490b2b6a091c938038d0ce2c5edd9cb0d454417b09958b7bfa8e9f711d9d"
+    },
+    "rq4_performance": {
+      "path": "results\\rq4\\performance.csv",
+      "sha256": "a7f037e4e2068bccea8c24f6483f5012d09e7f5fdb1f28a4748786bdfc2c149d"
+    },
+    "rq5": {
+      "path": "results\\rq5\\auc_summary.csv",
+      "sha256": "f8d8f63776e0b6e680e55736f762a095c2911a6777c8380cd4a1889ce61198be"
+    },
+    "rq6_classes": {
+      "path": "results\\rq6\\class_summary.csv",
+      "sha256": "90548138154b44572b8d2c2fa278693a37bca2b8a60717bab6de3a4b151aa7c2"
+    },
+    "rq6_ratings": {
+      "path": "results\\rq6\\rating_probabilities.csv",
+      "sha256": "d02ba4116340ec9cf0ccfbfa3854f391066f4ea380fddb3b65943fdbf5a9bc4f"
+    },
+    "rq7": {
+      "path": "results\\rq7\\auc_summary.csv",
+      "sha256": "e74216dc1b59d96ab75abb9f069474b2572797fb84cdc298606828c6a72a5030"
+    }
+  },
+  "outputs": {
+    "caption": {
+      "path": "results\\figures\\figure_1_caption.md",
+      "sha256": "1d8fc53a61164e3e9727e22bce5eaae403c2d3806c0b8fbdf6004afbef4754bd"
+    },
+    "pdf": {
+      "path": "results\\figures\\figure_1_main.pdf",
+      "sha256": "97b927af5e47fc10ab98399361879903030454067f66d7f349829b220805caea"
+    },
+    "png": {
+      "path": "results\\figures\\figure_1_main.png",
+      "sha256": "fd9545fd34c97010c32055f7e92a67288679603a99db7584e057fc5065992006"
+    },
+    "s1_pdf": {
+      "path": "results\\figures\\figure_s1_rq2_matrix.pdf",
+      "sha256": "d2c694c74ae95abe2dd70669315bb2982b23a81d6272958127475737c1932765"
+    },
+    "s1_png": {
+      "path": "results\\figures\\figure_s1_rq2_matrix.png",
+      "sha256": "dec80b7d9421c922a424793b8a856bd2aad3c72c546c866fdd47c3c7f3b7225b"
+    },
+    "s1_svg": {
+      "path": "results\\figures\\figure_s1_rq2_matrix.svg",
+      "sha256": "db82df5e515a0f84c750fa727ba3e51487d4d34d8f2ee742830216e26c5618fc"
+    },
+    "s1_tiff": {
+      "path": "results\\figures\\figure_s1_rq2_matrix.tiff",
+      "sha256": "c80adf48f93b2006059c3d18ce6d6949d7ae34bc21c803fb06740762e4d8c87e"
+    },
+    "s2_pdf": {
+      "path": "results\\figures\\figure_s2_rq5_curves.pdf",
+      "sha256": "c3c957846734dbc67c980774c15eaca372236887e6b1098912df1ad813c991db"
+    },
+    "s2_png": {
+      "path": "results\\figures\\figure_s2_rq5_curves.png",
+      "sha256": "4087122da4d53c9b13baf9a19345573f9e369f91cd42948655f4774dcb0665d7"
+    },
+    "s2_svg": {
+      "path": "results\\figures\\figure_s2_rq5_curves.svg",
+      "sha256": "903ea88eed6feb60e40ab9c7879e30e71a3cfe5b48fccf94dda8fd5c02c174c9"
+    },
+    "s2_tiff": {
+      "path": "results\\figures\\figure_s2_rq5_curves.tiff",
+      "sha256": "5804b7b5284614e935dea598fb304cefaf5bd683da4b948522ff2124c384503e"
+    },
+    "source_data": {
+      "path": "results\\figures\\figure_1_source_data.csv",
+      "sha256": "0c9b78926134ed3a2c51aaf8c51d61705261da4f9722412dc42793d87c3a7a30"
+    },
+    "supplementary_captions": {
+      "path": "results\\figures\\supplementary_figure_captions.md",
+      "sha256": "103ca09ad55c26adceda10ce0e38f57aeb6f795dad2003065acaf9a956e27fc2"
+    },
+    "supplementary_source_data": {
+      "path": "results\\figures\\supplementary_figure_source_data.csv",
+      "sha256": "6b89cfd9d55bcfa167e23a2fb93c3e58f1c53bdd1b36e8e9a80579f73c2c2180"
+    },
+    "svg": {
+      "path": "results\\figures\\figure_1_main.svg",
+      "sha256": "93ade9433eff69975ebcf3741778991a297542eba27b54ecc649497fd4e7519c"
+    },
+    "tiff": {
+      "path": "results\\figures\\figure_1_main.tiff",
+      "sha256": "8150711ed25397a9ef9297f13e220bf5eadc214d62ad8ed35afe99e400457820"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "figures"
+}

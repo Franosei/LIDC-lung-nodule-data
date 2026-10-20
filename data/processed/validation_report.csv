@@ -1,0 +1,43 @@
+check,status,observed,expected,detail
+annotation_count,pass,6859,6859,strict
+segmentation_count,pass,6859,6859,strict
+patient_count,pass,875,875,strict
+nodule_count,pass,2651,2651,strict
+diagnosis_patient_count,pass,157,157,strict
+nodules_with_1_or_2_readers,pass,1259,1259,strict
+nodules_with_3_or_4_readers,pass,1378,1378,strict
+nodules_with_more_than_4_readers,pass,14,14,strict
+unique_annotation_ids,pass,True,True,
+unique_segmentation_ids,pass,True,True,
+unique_nodule_ids,pass,True,True,
+unique_diagnosis_patient_ids,pass,True,True,
+tracking_uid_identifies_one_nodule,pass,0,0,
+nodule_has_one_tracking_uid,pass,0,0,
+all_referenced_segmentations_exist,pass,0,0,[]
+all_segmentations_are_referenced,pass,0,0,[]
+sr_seg_patient_match,pass,0,0,
+subtlety_range,pass,0,0,valid range 1 to 5
+subtlety_missing_values,pass,0,reported; fold-local imputation,
+internal_structure_range,pass,0,0,valid range 1 to 4
+internal_structure_missing_values,pass,1,reported; fold-local imputation,
+calcification_range,pass,0,0,valid range 1 to 6
+calcification_missing_values,pass,0,reported; fold-local imputation,
+sphericity_range,pass,0,0,valid range 1 to 5
+sphericity_missing_values,pass,0,reported; fold-local imputation,
+margin_range,pass,0,0,valid range 1 to 5
+margin_missing_values,pass,0,reported; fold-local imputation,
+lobulation_range,pass,0,0,valid range 1 to 5
+lobulation_missing_values,pass,0,reported; fold-local imputation,
+spiculation_range,pass,0,0,valid range 1 to 5
+spiculation_missing_values,pass,0,reported; fold-local imputation,
+texture_range,pass,0,0,valid range 1 to 5
+texture_missing_values,pass,0,reported; fold-local imputation,
+malignancy_range,pass,0,0,valid range 1 to 5
+malignancy_missing_values,pass,0,0,
+positive_finite_volume_mm3,pass,0,0,
+positive_finite_diameter_mm,pass,0,0,
+positive_finite_surface_area_mm2,pass,0,0,
+positive_finite_compactness,pass,0,0,
+nodule_model_feature_missing_values,pass,1,reported; fold-local imputation,
+diagnosis_patients_without_standardised_annotations,pass,15,reported; unavailable for nodule linkage,"[""LIDC-IDRI-0071"", ""LIDC-IDRI-0100"", ""LIDC-IDRI-0143"", ""LIDC-IDRI-0174"", ""LIDC-IDRI-0189"", ""LIDC-IDRI-0197"", ""LIDC-IDRI-0205"", ""LIDC-IDRI-0214"", ""LIDC-IDRI-0224"", ""LIDC-IDRI-0225"", ""LIDC-IDRI-0226"", ""LIDC-IDRI-0239"", ""LIDC-IDRI-0253"", ""LIDC-IDRI-0261"", ""LIDC-IDRI-0279""]"
+nodule_diagnoses_have_patient_record,pass,0,0,[]

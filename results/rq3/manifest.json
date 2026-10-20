@@ -1,0 +1,62 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "a9299b6df9120602edc03e9225ea96a3739d8a8462114c44476e2a7419c43276",
+  "created_at_utc": "2026-10-19T19:52:40.222953+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4"
+  },
+  "method": {
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "cross_validation_folds": 5,
+    "cross_validation_repetitions": 20,
+    "cross_validation_unit": "patient",
+    "reader_assignment": "deterministic_seeded_without_replacement_within_nodule"
+  },
+  "outputs": {
+    "auc_comparisons": {
+      "path": "results\\rq3\\auc_comparisons.csv",
+      "sha256": "edec89d352e6fd2628c7c42226a52050ed9c3e86841c954fae26b1b4479b5f56"
+    },
+    "comparison_bootstrap": {
+      "path": "results\\rq3\\comparison_bootstrap.parquet",
+      "sha256": "2e1cbbf3602facb336596244a5dcf152af7588d4e7baf74fdeb762339bef1201"
+    },
+    "metric_bootstrap": {
+      "path": "results\\rq3\\metric_bootstrap.parquet",
+      "sha256": "d056de6409ce5b7693937fc4e0f560b5b6038016deacf0e20fe511fbf42e6370"
+    },
+    "performance": {
+      "path": "results\\rq3\\performance.csv",
+      "sha256": "30922cc5eeac6c89de7445635dc556bd993bc823b40a53250cf31ade25b74e39"
+    },
+    "predictions": {
+      "path": "results\\rq3\\predictions.parquet",
+      "sha256": "1253ac5f543ea585956b0a50a0eb4ab5111995e4fcd210bfeab059894395664f"
+    },
+    "reader_assignments": {
+      "path": "results\\rq3\\reader_assignments.parquet",
+      "sha256": "adc1f6574ed41ae2ea772725db72f3db32ff2cc6d165b4863485b5bf1ab6cd43"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "nodules": 1378,
+    "patients": 690
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq3"
+}

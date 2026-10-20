@@ -1,0 +1,93 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "5c7bb6d2886dafe24b1390376f613985bb37d91c1c2e80876aac051fb11a3971",
+  "created_at_utc": "2026-10-20T04:12:51.934889+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4",
+    "rq6_posterior": "1f7110e8ec03f2fbc6829c619a71a9438ce929373ecc5868b750b7f254727640"
+  },
+  "method": {
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "cross_validation_folds": 5,
+    "cross_validation_repetitions": 20,
+    "cross_validation_unit": "patient",
+    "excluded_case_reference": "any_reader_4_or_5",
+    "fixed_prediction_model": "combined_logistic",
+    "fixed_prediction_reference": "median_exclude_3",
+    "latent_class_status": "implemented",
+    "references": {
+      "any_reader_4_or_5": "Malignant if any reader assigns rating 4 or 5",
+      "latent_class": "Suspicious-class posterior at the configured RQ6 threshold",
+      "median_3_benign": "Median rating above 3 is malignant; median 3 is benign",
+      "median_3_malignant": "Median rating at least 3 is malignant",
+      "median_exclude_3": "Median rating above 3 is malignant; median 3 is excluded",
+      "random_reader": "One deterministic random reader; rating 4 or 5 is malignant"
+    }
+  },
+  "outputs": {
+    "bootstrap_replicates": {
+      "path": "results\\rq2\\bootstrap_replicates.parquet",
+      "sha256": "22fe38055cf3f9c83ffecc9f2289f1a45e02dab748cb7d6883566a3558eadf53"
+    },
+    "excluded_case_bootstrap": {
+      "path": "results\\rq2\\excluded_case_bootstrap.parquet",
+      "sha256": "93a9ece163294b95a11d8e1bde71be1f3aaf7b34de018497794e39393a1bf862"
+    },
+    "excluded_case_predictions": {
+      "path": "results\\rq2\\excluded_case_predictions.parquet",
+      "sha256": "7abacd8fa26d77c1cf0589767c0adbadc521aac143bd44ff4855c0782e286b8c"
+    },
+    "excluded_case_summary": {
+      "path": "results\\rq2\\excluded_case_summary.csv",
+      "sha256": "8a129ce9a6a4ea7d8317e3616f9de98599349a3741927480ecb9d9739af1f166"
+    },
+    "fixed_reference_bootstrap": {
+      "path": "results\\rq2\\fixed_reference_bootstrap.parquet",
+      "sha256": "d424bbe0e45ef6beb56c3f4ac9a72f5a6211b30ac38271cb4da8416e9b858061"
+    },
+    "fixed_reference_comparison": {
+      "path": "results\\rq2\\fixed_reference_comparison.csv",
+      "sha256": "e32d1640c1da7cf333f5f01160e8980f334bdd7a7a56d034c0a1e203fc1a63eb"
+    },
+    "per_repeat_metrics": {
+      "path": "results\\rq2\\per_repeat_metrics.parquet",
+      "sha256": "376afc048bcf1f6d1d07d781b72186743be571951ebfc209b2b08c9d3638b4c0"
+    },
+    "performance": {
+      "path": "results\\rq2\\performance.csv",
+      "sha256": "6ac60d53813f24d0a7081aa06dd69edbf69cb34a47fb126e605d39a50718b0a6"
+    },
+    "predictions": {
+      "path": "results\\rq2\\predictions.parquet",
+      "sha256": "416c918d7ed991f40506b0ad6d16a50f09c3a5334c91b35182f21567532e9892"
+    },
+    "reference_summary": {
+      "path": "results\\rq2\\reference_summary.csv",
+      "sha256": "deec8019fd22be56e38b6fd7c8ef8a963b009162ae39dccedfd2f256bb97acf3"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "annotations": 5031,
+    "maximum_readers": 4,
+    "minimum_readers": 3,
+    "nodules": 1378,
+    "patients": 690
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq2"
+}

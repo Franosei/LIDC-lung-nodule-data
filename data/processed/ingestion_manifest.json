@@ -1,0 +1,61 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "3d87b7ed8f2c22125c1b489a1045210ee7758778ac654cac9181dd8d4a8f5a6a",
+  "created_at_utc": "2026-10-19T12:24:48.035355+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "diagnosis_workbook": {
+      "path": "tcia-diagnosis-data-2012-04-20.xls",
+      "sha256": "5b7cdcb0fc016e976f5c65d8122bb93c3665432d44e1573bac1cc9573079868a"
+    },
+    "dicom_archive": {
+      "path": "LIDC-IDRI-StandardizedRepresentation-March2020-manifest.zip",
+      "sha256": "15711df66ac1408cfeb53ffc559b530c83966f8e931bb841644c414e0a5af53c"
+    }
+  },
+  "outputs": {
+    "annotations": {
+      "path": "data\\processed\\annotations.parquet",
+      "rows": 6859,
+      "sha256": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01"
+    },
+    "diagnosis_nodules": {
+      "path": "data\\processed\\diagnosis_nodules.parquet",
+      "rows": 157,
+      "sha256": "ee4bc39ef83f94e5fdd076f061b1d61d3ac487bf313d433bd200a5ddc4ae4853"
+    },
+    "diagnosis_patients": {
+      "path": "data\\processed\\diagnosis_patients.parquet",
+      "rows": 157,
+      "sha256": "f09081795f93aeff00eedfaa7dce2e8bcfa78b8142a941cd1a1886f6acbec054"
+    },
+    "nodules": {
+      "path": "data\\processed\\nodules.parquet",
+      "rows": 2651,
+      "sha256": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4"
+    },
+    "segmentations": {
+      "path": "data\\processed\\segmentations.parquet",
+      "rows": 6859,
+      "sha256": "ec85a48f87d84ab778705348e32cd3beba115b1e3b7a2e88cc345b90f558dbc8"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "ingestion",
+  "validation": {
+    "checks": 42,
+    "failed": 0,
+    "path": "data\\processed\\validation_report.csv"
+  }
+}

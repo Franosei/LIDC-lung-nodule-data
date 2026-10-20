@@ -1,0 +1,66 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "5c7bb6d2886dafe24b1390376f613985bb37d91c1c2e80876aac051fb11a3971",
+  "created_at_utc": "2026-10-20T03:57:40.020415+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4",
+    "rq3_reader_assignments": "adc1f6574ed41ae2ea772725db72f3db32ff2cc6d165b4863485b5bf1ab6cd43",
+    "rq6_posterior": "1f7110e8ec03f2fbc6829c619a71a9438ce929373ecc5868b750b7f254727640"
+  },
+  "method": {
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "diameter_boundary": "univariable_logistic_panel_probability_0.5",
+    "frozen_model": "geometry_logistic",
+    "local_rating_3_excluded_from_training": true,
+    "local_reader": "reader_a_from_rq3",
+    "relabel_order": "fixed_seeded_nested_random_order"
+  },
+  "outputs": {
+    "bootstrap_replicates": {
+      "path": "results\\rq4\\bootstrap_replicates.parquet",
+      "sha256": "9aea5f4fade393f75cc7fba7929777b98117f3d7101bcb18f07140dce0881587"
+    },
+    "frozen_predictions": {
+      "path": "results\\rq4\\frozen_predictions.parquet",
+      "sha256": "95346fae25b7bc17b671613dc74b5e934b95d8b851359ef9552323608d0b1510"
+    },
+    "panel_labels": {
+      "path": "results\\rq4\\panel_labels.parquet",
+      "sha256": "a7e41ff1a51ae3997f161532ed8ed51bdd71fa1ee877c90ec9486227d1b26b85"
+    },
+    "panel_summary": {
+      "path": "results\\rq4\\panel_summary.csv",
+      "sha256": "8f66490b2b6a091c938038d0ce2c5edd9cb0d454417b09958b7bfa8e9f711d9d"
+    },
+    "performance": {
+      "path": "results\\rq4\\performance.csv",
+      "sha256": "a7f037e4e2068bccea8c24f6483f5012d09e7f5fdb1f28a4748786bdfc2c149d"
+    },
+    "raw_predictions": {
+      "path": "results\\rq4\\raw_predictions.parquet",
+      "sha256": "e0ee835f10e57867f2d18b1c80683a139dafc7080b2e07e090a1cd18373e6bdb"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "local_reader_indeterminate_nodules": 530,
+    "nodules": 1378,
+    "patients": 690
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq4"
+}

@@ -1,0 +1,15 @@
+analysis,subset,score,reference,auc,confidence_level,ci_lower,ci_upper,valid_bootstrap_repetitions,nodules,malignant_nodules
+confirmed_diagnosis,all_confirmed,combined_logistic,diagnosis,0.675595238095238,0.95,0.4695448369565217,0.8571631493506492,2000,38,24
+confirmed_diagnosis,all_confirmed,radiologist_mean_rating,diagnosis,0.6755952380952381,0.95,0.48009140487282803,0.8523200757575755,2000,38,24
+confirmed_diagnosis,pathology_confirmed,combined_logistic,diagnosis,0.6470588235294118,0.95,0.2222222222222222,1.0,1777,19,17
+confirmed_diagnosis,pathology_confirmed,radiologist_mean_rating,diagnosis,0.5294117647058824,0.95,0.17647058823529413,0.8823529411764706,1753,19,17
+confirmed_diagnosis,primary_vs_benign,combined_logistic,diagnosis,0.8095238095238095,0.95,0.6178002450980397,0.9608272058823527,2000,26,12
+confirmed_diagnosis,primary_vs_benign,radiologist_mean_rating,diagnosis,0.8511904761904762,0.95,0.68125,0.9761904761904762,2000,26,12
+confirmed_diagnosis,strictest_linkage,combined_logistic,diagnosis,0.5974025974025974,0.95,0.29230769230769227,0.9077622377622377,1999,18,11
+confirmed_diagnosis,strictest_linkage,radiologist_mean_rating,diagnosis,0.5909090909090909,0.95,0.30000000000000004,0.857242063492063,2000,18,11
+radiologist_reference,all_linked,combined_logistic,median_exclude_3,0.9926470588235294,0.95,0.9653571428571429,1.0,2000,33,17
+radiologist_reference,all_linked,combined_logistic,median_3_benign,0.9943977591036414,0.95,0.9744318181818182,1.0,2000,38,17
+radiologist_reference,all_linked,combined_logistic,median_3_malignant,0.9062500000000001,0.95,0.7871045648176168,0.9871923076923076,2000,38,22
+radiologist_reference,all_linked,combined_logistic,any_reader_4_or_5,0.931547619047619,0.95,0.839732142857143,0.9967980769230769,2000,38,24
+radiologist_reference,all_linked,combined_logistic,random_reader,0.9659090909090909,0.95,0.9047619047619048,1.0,2000,38,16
+radiologist_reference,all_linked,combined_logistic,latent_class,0.9807692307692308,0.95,0.9353716475095786,1.0,2000,38,12

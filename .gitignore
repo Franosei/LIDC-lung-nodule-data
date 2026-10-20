@@ -211,6 +211,10 @@ tempCodeRunnerFile.py
 # PyPI configuration file
 .pypirc
 
+# Project data and generated analysis artefacts
+LIDC-IDRI-StandardizedRepresentation-March2020-manifest.zip
+
+
 # Marimo
 marimo/_static/
 marimo/_lsp/

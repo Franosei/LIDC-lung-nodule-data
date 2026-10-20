@@ -1,0 +1,7 @@
+comparison,stratum,evaluation_reader,estimate,confidence_level,ci_lower,ci_upper,valid_bootstrap_repetitions
+same_reader_inflation,geometry_logistic,reader_a,0.005351375259725288,0.95,-0.0046198197766233046,0.015077275015869463,2000
+same_reader_inflation,semantic_logistic,reader_a,0.06819981896356653,0.95,0.039103229029597134,0.0980570388985655,2000
+semantic_minus_geometry,same_reader,reader_a,-0.002273241580776908,0.95,-0.028363278081640186,0.024822448393156067,2000
+semantic_minus_geometry,same_reader,reader_c,-0.09067823892244098,0.95,-0.12342508294164817,-0.059506320831381264,2000
+semantic_minus_geometry,other_reader,reader_a,-0.06512168528461815,0.95,-0.09434042793227082,-0.03709194909608881,2000
+semantic_minus_geometry,other_reader,reader_c,-0.07712633761283616,0.95,-0.10588183773740839,-0.04927619594121268,2000

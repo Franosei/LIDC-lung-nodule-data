@@ -1,0 +1,7 @@
+metric,description,estimate,confidence_level,ci_lower,ci_upper,valid_bootstrap_repetitions
+ordinal_alpha,"Krippendorff alpha, ordinal malignancy rating",0.419286355744096,0.95,0.37310012754336924,0.46520667421374073,2000
+binary_alpha,"Krippendorff alpha, benign 1 to 2 versus malignant 4 to 5",0.42137704565030143,0.95,0.3728966111844505,0.4723087016006978,2000
+pairwise_exact_agreement,Pairwise exact agreement on the 1 to 5 rating,0.38168498168498166,0.95,0.36239961539305976,0.4035512376958192,2000
+pairwise_binary_agreement,Pairwise agreement after excluding rating 3,0.7316908538643268,0.95,0.7060314159699406,0.7586932923056525,2000
+all_readers_agree,Nodules with identical malignancy ratings,0.14223512336719885,0.95,0.12020134584218581,0.16727081870992125,2000
+benign_malignant_discordance,Nodules rated 1 to 2 and 4 to 5,0.2997097242380261,0.95,0.2704504045002123,0.32693827266662495,2000

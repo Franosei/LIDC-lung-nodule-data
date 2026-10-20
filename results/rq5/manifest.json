@@ -1,0 +1,87 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "5c7bb6d2886dafe24b1390376f613985bb37d91c1c2e80876aac051fb11a3971",
+  "created_at_utc": "2026-10-20T03:53:35.221109+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "diagnosis_nodules": "ee4bc39ef83f94e5fdd076f061b1d61d3ac487bf313d433bd200a5ddc4ae4853",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4",
+    "rq6_posterior": "1f7110e8ec03f2fbc6829c619a71a9438ce929373ecc5868b750b7f254727640"
+  },
+  "method": {
+    "addition_fractions": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "consensus_reference": "median_3_benign",
+    "cross_validation_unit": "patient",
+    "diagnosis_patients_excluded_from_training": true,
+    "fixed_test_folds_across_fractions": true,
+    "models": [
+      "geometry_logistic",
+      "semantic_logistic",
+      "combined_logistic",
+      "combined_random_forest"
+    ],
+    "noisy_reference": "random_reader",
+    "paired_auc_change_baseline_fraction": 0.0,
+    "repetitions": 20
+  },
+  "outputs": {
+    "auc_change_bootstrap": {
+      "path": "results\\rq5\\auc_change_bootstrap.parquet",
+      "sha256": "1f887a2480b894aa87497252accea5510a6a645aca7a33173532bed5ed8c4b72"
+    },
+    "auc_changes": {
+      "path": "results\\rq5\\auc_changes.csv",
+      "sha256": "f3f97766b0a54815ca1b95212beff38acc7fe7cef2cbda44c065a8a96c087297"
+    },
+    "auc_summary": {
+      "path": "results\\rq5\\auc_summary.csv",
+      "sha256": "f8d8f63776e0b6e680e55736f762a095c2911a6777c8380cd4a1889ce61198be"
+    },
+    "bootstrap_replicates": {
+      "path": "results\\rq5\\bootstrap_replicates.parquet",
+      "sha256": "14d807be7d5153b33222f4cdebff600ad164267840a9cd2c2a75a457375a46ee"
+    },
+    "diagnosis_predictions": {
+      "path": "results\\rq5\\diagnosis_predictions.parquet",
+      "sha256": "d2b9d16d31fdb9809c2e572c5a77dac4758178e2eb5c2f5a0e420ad6ee2bda38"
+    },
+    "main_predictions": {
+      "path": "results\\rq5\\main_predictions.parquet",
+      "sha256": "dcfca9cf22291c4e97f9ad3013e283ac7b98e7ab42d648dc210164034fc87a97"
+    },
+    "per_repeat_auc": {
+      "path": "results\\rq5\\per_repeat_auc.parquet",
+      "sha256": "0c1874aea0ca0002480fb82de5f7882b3d0df05a70344401716d081891d2406e"
+    },
+    "training_counts": {
+      "path": "results\\rq5\\training_counts.parquet",
+      "sha256": "5004981a03eb4bb87935725181dcaf9873eec37b98b3dfe9086b522f6f267a5f"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "consensus_nodules": 1378,
+    "diagnosis_nodules": 38,
+    "noisy_label_nodules": 1259
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq5"
+}

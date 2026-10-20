@@ -1,0 +1,54 @@
+{
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "a9299b6df9120602edc03e9225ea96a3739d8a8462114c44476e2a7419c43276",
+  "created_at_utc": "2026-10-19T19:55:47.332474+00:00",
+  "git_revision": "fb76dce73d7f262a392cdf51490997fca64fa75c",
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "diagnosis_nodules": "ee4bc39ef83f94e5fdd076f061b1d61d3ac487bf313d433bd200a5ddc4ae4853",
+    "nodules": "f61dba930a2c08f6267ba9ce04a332dea77e680cf48f81ad533a0fa3586ca9c4",
+    "rq6_posterior": "1f7110e8ec03f2fbc6829c619a71a9438ce929373ecc5868b750b7f254727640"
+  },
+  "method": {
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "diagnosis_patients_excluded_from_training": true,
+    "linkage": "one_known_nodule_diagnosis_and_one_three_to_four_reader_nodule",
+    "model": "combined_logistic",
+    "training_reference": "median_exclude_3"
+  },
+  "outputs": {
+    "auc_summary": {
+      "path": "results\\rq7\\auc_summary.csv",
+      "sha256": "e74216dc1b59d96ab75abb9f069474b2572797fb84cdc298606828c6a72a5030"
+    },
+    "bootstrap_replicates": {
+      "path": "results\\rq7\\bootstrap_replicates.parquet",
+      "sha256": "0e4aac48b31565026e4afe2ccc2bf11d218ceb95878d06519fb03b8ba7b1978e"
+    },
+    "linked_predictions": {
+      "path": "results\\rq7\\linked_predictions.parquet",
+      "sha256": "4fd3e1742463e9f8d661fb5bbb726054ac6383f06044984a238dbf9d96c1fd0f"
+    }
+  },
+  "packages": {
+    "krippendorff": "0.8.2",
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1",
+    "xlrd": "2.0.2"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "benign": 14,
+    "metastatic_malignancy": 12,
+    "nodules": 38,
+    "primary_lung_cancer": 12
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "rq7"
+}

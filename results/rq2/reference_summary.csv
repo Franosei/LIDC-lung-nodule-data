@@ -1,0 +1,7 @@
+reference,description,status,available_nodules,malignant_nodules,prevalence
+median_exclude_3,Median rating above 3 is malignant; median 3 is excluded,implemented,869,421,0.4844649021864212
+median_3_benign,Median rating above 3 is malignant; median 3 is benign,implemented,1378,421,0.30551523947750364
+median_3_malignant,Median rating at least 3 is malignant,implemented,1378,930,0.6748911465892597
+any_reader_4_or_5,Malignant if any reader assigns rating 4 or 5,implemented,1378,757,0.5493468795355588
+random_reader,One deterministic random reader; rating 4 or 5 is malignant,implemented,1378,371,0.2692307692307692
+latent_class,Suspicious-class posterior at the configured RQ6 threshold,implemented,1378,348,0.2525399129172714
