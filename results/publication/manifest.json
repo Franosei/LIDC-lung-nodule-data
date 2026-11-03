@@ -1,10 +1,10 @@
 {
-  "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+  "analysis_code_sha256": "b78f178d8d4827fbb7674d1b08d8e182b97ef0230f1bbb4c742164df1f753d7e",
   "config_path": "config\\analysis.toml",
   "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
-  "created_at_utc": "2026-11-03T07:41:06.737965+00:00",
+  "created_at_utc": "2026-11-03T09:04:23.166477+00:00",
   "figure": "label_assignment_and_case_exclusion_effects",
-  "git_revision": "f7b83006eb4c90d20ee7226a2a5d2634446dea3e",
+  "git_revision": "d6d9609cd7e71808fc61d336816aa3aaf57c4378",
   "git_worktree_dirty": true,
   "inputs": {
     "effects": {
@@ -23,23 +23,23 @@
   "outputs": {
     "figure_caption": {
       "path": "results\\publication\\figure_1_caption.md",
-      "sha256": "a564a6526b54eb94102c3ad800b40e676a2c6d643d7b26296330911218b6def6"
+      "sha256": "f5beb2172ad8eafba101c13947d5ffb9a823f51f3e0bc3df6486f9971cd955af"
     },
     "figure_pdf": {
       "path": "results\\publication\\figure_1_annotation_effects.pdf",
-      "sha256": "7d0d004ef9bc4195df34b0e9600918f56779a7520c80b690f73536de8194a41d"
+      "sha256": "3640817ac59c9598e7a451b64b59df7d33863015504433f790d939fdd63b56b4"
     },
     "figure_png": {
       "path": "results\\publication\\figure_1_annotation_effects.png",
-      "sha256": "58239c7829b3aa12819cb888df6154288a7090a0807fab13df958035efdc29b8"
+      "sha256": "2edf13a76684b6d0bdc9069a4529aaa8121f3d5c3f85b714159bbd2adcbc2bdc"
     },
     "figure_svg": {
       "path": "results\\publication\\figure_1_annotation_effects.svg",
-      "sha256": "fc330f4842906028be50e1be2d3b720b297b768378e7291c67ad041236778f56"
+      "sha256": "768658877ebd4d867486f1a5a8b898f9bf6083a1639d6cf59446cec949257bb1"
     },
     "figure_tiff": {
       "path": "results\\publication\\figure_1_annotation_effects.tiff",
-      "sha256": "0f21dd0176e38c6724330a76855ea43c5b5d138df68cd8ee2c637840cd29a91c"
+      "sha256": "7a681fb5041dcf9e6ef3f96158151cbe5df6487c375ef3ef395f7d64ef994356"
     },
     "table_1": {
       "path": "results\\publication\\table_1_reference_definitions.csv",
@@ -61,15 +61,6 @@
   },
   "platform": "Windows-11-10.0.26200-SP0",
   "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
-  "release_source": {
-    "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
-    "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
-    "git_revision": "98a35032531825c679ba643c35a8408bc15c8ea7",
-    "git_tag": "analysis-source-v1",
-    "git_worktree_dirty": false,
-    "output_hashes_verified": true,
-    "source_snapshot_verified": true
-  },
   "stage": "publication",
   "tables": [
     "reference_definitions",

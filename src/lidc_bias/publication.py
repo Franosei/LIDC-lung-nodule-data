@@ -10,6 +10,7 @@ import pandas as pd
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import MaxNLocator
 
 from .config import AnalysisConfig
 from .errors import SourceDataError
@@ -21,6 +22,10 @@ def _effect_label(row: pd.Series) -> str:
         return "Label assignment\n(3 malignant - 3 benign)"
     reference = str(row.get("reference", "")).replace("median_3_", "")
     return f"Case exclusion\n(3 {reference} rule)"
+
+
+JOURNAL_COLOURS = ("#D55E00", "#0072B2", "#009E73")
+JOURNAL_MARKERS = ("o", "s", "D")
 
 
 def create_publication_outputs(config: AnalysisConfig) -> dict[str, Any]:
@@ -53,11 +58,28 @@ def create_publication_outputs(config: AnalysisConfig) -> dict[str, Any]:
         {
             "font.family": "DejaVu Sans",
             "font.size": 8,
+            "axes.labelsize": 8,
+            "axes.titlesize": 9,
+            "axes.linewidth": 0.8,
             "axes.spines.top": False,
             "axes.spines.right": False,
+            "xtick.labelsize": 7.5,
+            "ytick.labelsize": 8,
+            "xtick.major.size": 3,
+            "ytick.major.size": 3,
+            "pdf.fonttype": 42,
+            "ps.fonttype": 42,
+            "svg.fonttype": "none",
+            "savefig.bbox": "tight",
         }
     )
-    figure, axes = plt.subplots(1, 2, figsize=(7.2, 3.2), constrained_layout=True)
+    figure, axes = plt.subplots(
+        1,
+        2,
+        figsize=(7.2, 3.15),
+        constrained_layout=True,
+        gridspec_kw={"wspace": 0.08},
+    )
     for axis, metric, title in zip(
         axes,
         ("auc", "brier_score"),
@@ -66,27 +88,54 @@ def create_publication_outputs(config: AnalysisConfig) -> dict[str, Any]:
     ):
         values = plot_data.loc[plot_data["metric"] == metric].copy()
         y = np.arange(len(values))[::-1]
-        axis.errorbar(
-            values["estimate"],
-            y,
-            xerr=np.vstack(
-                [
-                    values["estimate"] - values["ci_lower"],
-                    values["ci_upper"] - values["estimate"],
-                ]
-            ),
-            fmt="o",
-            color="#24557A",
-            ecolor="#24557A",
-            capsize=2,
-            markersize=4,
-        )
-        axis.axvline(0, color="#999999", linewidth=0.8)
+        for row_index, (_, row) in enumerate(values.iterrows()):
+            axis.errorbar(
+                row["estimate"],
+                y[row_index],
+                xerr=np.array(
+                    [
+                        [row["estimate"] - row["ci_lower"]],
+                        [row["ci_upper"] - row["estimate"]],
+                    ]
+                ),
+                fmt=JOURNAL_MARKERS[row_index],
+                color=JOURNAL_COLOURS[row_index],
+                ecolor=JOURNAL_COLOURS[row_index],
+                markeredgecolor="white",
+                markeredgewidth=0.6,
+                capsize=2.5,
+                capthick=1.2,
+                elinewidth=1.4,
+                markersize=6,
+                zorder=3,
+            )
+        axis.axvline(0, color="#5F6368", linewidth=0.9, linestyle=(0, (3, 2)), zorder=1)
+        axis.grid(axis="x", color="#E2E5E9", linewidth=0.6, zorder=0)
         axis.set_yticks(y, values["label"] if metric == "auc" else [""] * len(values))
         axis.set_xlabel("Paired difference (95% patient-bootstrap CI)")
-        axis.set_title(title, loc="left", fontweight="bold")
-    axes[0].text(-0.12, 1.05, "A", transform=axes[0].transAxes, fontweight="bold")
-    axes[1].text(-0.12, 1.05, "B", transform=axes[1].transAxes, fontweight="bold")
+        axis.set_title(title, loc="left", fontweight="semibold", pad=8)
+        axis.xaxis.set_major_locator(MaxNLocator(nbins=6, steps=[1, 2, 2.5, 5, 10]))
+        axis.tick_params(direction="out", width=0.8)
+    axes[0].set_xlim(-0.15, 0.17)
+    axes[1].set_xlim(-0.23, 0.19)
+    axes[0].text(
+        -0.17,
+        1.07,
+        "A",
+        transform=axes[0].transAxes,
+        fontsize=10,
+        fontweight="bold",
+        va="top",
+    )
+    axes[1].text(
+        -0.12,
+        1.07,
+        "B",
+        transform=axes[1].transAxes,
+        fontsize=10,
+        fontweight="bold",
+        va="top",
+    )
 
     output_dir = config.paths.results_dir / "publication"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -108,7 +157,9 @@ def create_publication_outputs(config: AnalysisConfig) -> dict[str, Any]:
         "full-cohort median rules on identical nodules (median-3-malignant minus "
         "median-3-benign). Case exclusion compares the restricted population with "
         "the full population while retaining the stated label rule. Intervals use "
-        "patient-level bootstrap resampling.\n",
+        "patient-level bootstrap resampling. Vermillion circles indicate label "
+        "assignment; blue squares and green diamonds indicate exclusion under the "
+        "median-3-benign and median-3-malignant rules, respectively.\n",
         encoding="utf-8",
     )
     output_paths["figure_caption"] = caption_path
