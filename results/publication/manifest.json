@@ -1,0 +1,69 @@
+{
+  "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
+  "created_at_utc": "2026-11-03T07:41:06.737965+00:00",
+  "figure": "label_assignment_and_case_exclusion_effects",
+  "git_revision": "f7b83006eb4c90d20ee7226a2a5d2634446dea3e",
+  "git_worktree_dirty": true,
+  "inputs": {
+    "effects": {
+      "path": "results\\label_case_effects\\effects.csv",
+      "sha256": "fbc2dfbae3d728d3058e8860daeffcea740efbdcd53e0c3d203ba3e4ecf24e99"
+    },
+    "references": {
+      "path": "results\\label_case_effects\\reference_definitions.csv",
+      "sha256": "71e29f06baad1ed1c78d2b2081ab0f3bc89b8aadcc9f82b651f15c996e59f7a2"
+    },
+    "shared": {
+      "path": "results\\shared_assessment\\effect_summary.csv",
+      "sha256": "253db92947965f736f5c6aac65cab8604e145d82d77d06d5347f280447054243"
+    }
+  },
+  "outputs": {
+    "figure_caption": {
+      "path": "results\\publication\\figure_1_caption.md",
+      "sha256": "a564a6526b54eb94102c3ad800b40e676a2c6d643d7b26296330911218b6def6"
+    },
+    "figure_pdf": {
+      "path": "results\\publication\\figure_1_annotation_effects.pdf",
+      "sha256": "7d0d004ef9bc4195df34b0e9600918f56779a7520c80b690f73536de8194a41d"
+    },
+    "figure_png": {
+      "path": "results\\publication\\figure_1_annotation_effects.png",
+      "sha256": "58239c7829b3aa12819cb888df6154288a7090a0807fab13df958035efdc29b8"
+    },
+    "figure_svg": {
+      "path": "results\\publication\\figure_1_annotation_effects.svg",
+      "sha256": "fc330f4842906028be50e1be2d3b720b297b768378e7291c67ad041236778f56"
+    },
+    "figure_tiff": {
+      "path": "results\\publication\\figure_1_annotation_effects.tiff",
+      "sha256": "0f21dd0176e38c6724330a76855ea43c5b5d138df68cd8ee2c637840cd29a91c"
+    },
+    "table_1": {
+      "path": "results\\publication\\table_1_reference_definitions.csv",
+      "sha256": "7d3bf9653aa3e4f945eb412fff4740aa77a13fb546d9083adfe8a00f12ab987e"
+    },
+    "table_2": {
+      "path": "results\\publication\\table_2_shared_assessment_effects.csv",
+      "sha256": "10102520d6e1710dbb8870ca2fd424b3be3935631b257f215e69934169b8ae72"
+    }
+  },
+  "packages": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "publication",
+  "tables": [
+    "reference_definitions",
+    "matched_shared_assessment_effects"
+  ]
+}

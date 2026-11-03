@@ -1,6 +1,5 @@
 [paths]
 dicom_archive = "LIDC-IDRI-StandardizedRepresentation-March2020-manifest.zip"
-diagnosis_workbook = "tcia-diagnosis-data-2012-04-20.xls"
 processed_dir = "data/processed"
 results_dir = "results"
 
@@ -19,15 +18,8 @@ nodules = 2651
 nodules_with_1_or_2_readers = 1259
 nodules_with_3_or_4_readers = 1378
 nodules_with_more_than_4_readers = 14
-diagnosis_patients = 157
 
-[rq1]
-minimum_readers = 3
-maximum_readers = 4
-bootstrap_repetitions = 2000
-confidence_level = 0.95
-
-[rq2]
+[label_case_effects]
 minimum_readers = 3
 maximum_readers = 4
 cross_validation_folds = 5
@@ -35,66 +27,29 @@ cross_validation_repetitions = 20
 bootstrap_repetitions = 2000
 confidence_level = 0.95
 random_reader_seed_offset = 1100
-fixed_prediction_reference = "median_exclude_3"
-fixed_prediction_model = "combined_logistic"
-excluded_case_reference = "any_reader_4_or_5"
+partition_seed_offset = 2100
+training_reference = "median_exclude_3"
+model = "combined_logistic"
+primary_references = ["median_3_benign", "median_3_malignant"]
+sensitivity_references = ["any_reader_4_or_5", "random_reader"]
 
-[rq2.logistic_regression]
+[label_case_effects.logistic_regression]
 regularisation_c = 1.0
 maximum_iterations = 5000
 class_weight = "balanced"
 
-[rq2.random_forest]
-trees = 500
-minimum_leaf_size = 1
-maximum_features = "sqrt"
-class_weight = "balanced"
-n_jobs = -1
-
-[rq3]
+[shared_assessment]
 minimum_readers = 3
 maximum_readers = 4
+assignment_repetitions = 20
+assignment_seed_offset = 3100
 cross_validation_folds = 5
 cross_validation_repetitions = 20
+partition_seed_offset = 4100
 bootstrap_repetitions = 2000
 confidence_level = 0.95
-reader_assignment_seed_offset = 3100
-
-[rq4]
-minimum_readers = 3
-maximum_readers = 4
-relabelling_percentages = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-bootstrap_repetitions = 2000
-confidence_level = 0.95
-reader_assignment_seed_offset = 4100
-model = "geometry_logistic"
-
-[rq5]
-addition_fractions = [0.0, 0.25, 0.5, 0.75, 1.0]
-cross_validation_folds = 5
-repetitions = 20
-bootstrap_repetitions = 2000
-confidence_level = 0.95
-models = ["geometry_logistic", "semantic_logistic", "combined_logistic", "combined_random_forest"]
-consensus_reference = "median_3_benign"
-noisy_reference = "random_reader"
-
-[rq6]
-minimum_readers = 3
-maximum_readers = 4
-minimum_classes = 1
-maximum_classes = 5
-random_starts = 30
-maximum_iterations = 2000
-tolerance = 1e-9
-posterior_threshold = 0.5
-
-[rq7]
-bootstrap_repetitions = 2000
-confidence_level = 0.95
-training_reference = "median_exclude_3"
 model = "combined_logistic"
 
-[figures]
+[publication]
 dpi = 600
 formats = ["pdf", "svg", "png", "tiff"]

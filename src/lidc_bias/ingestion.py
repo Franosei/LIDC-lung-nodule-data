@@ -10,7 +10,6 @@ from typing import Any
 import pandas as pd
 
 from .config import AnalysisConfig
-from .diagnosis import read_diagnoses
 from .dicom_sr import read_archive
 from .provenance import base_manifest, sha256_file, write_json
 from .tables import build_nodule_table
@@ -76,15 +75,12 @@ def run_ingestion(config: AnalysisConfig) -> dict[str, Any]:
     annotations, segmentations = _read_or_build_dicom_cache(
         config, archive_sha256
     )
-    diagnosis_patients, diagnosis_nodules = read_diagnoses(config.paths.diagnosis_workbook)
     nodules = build_nodule_table(annotations)
 
     report = validate_tables(
         annotations,
         segmentations,
         nodules,
-        diagnosis_patients,
-        diagnosis_nodules,
         config,
     )
     validation_path = config.paths.processed_dir / "validation_report.csv"
@@ -95,8 +91,6 @@ def run_ingestion(config: AnalysisConfig) -> dict[str, Any]:
         "annotations": annotations,
         "segmentations": segmentations,
         "nodules": nodules,
-        "diagnosis_patients": diagnosis_patients,
-        "diagnosis_nodules": diagnosis_nodules,
     }
     paths = processed_paths(config)
     for name, frame in frames.items():
@@ -110,10 +104,6 @@ def run_ingestion(config: AnalysisConfig) -> dict[str, Any]:
                 "dicom_archive": {
                     "path": str(config.paths.dicom_archive.relative_to(config.project_root)),
                     "sha256": archive_sha256,
-                },
-                "diagnosis_workbook": {
-                    "path": str(config.paths.diagnosis_workbook.relative_to(config.project_root)),
-                    "sha256": sha256_file(config.paths.diagnosis_workbook),
                 },
             },
             "outputs": {

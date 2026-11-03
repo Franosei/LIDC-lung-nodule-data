@@ -3,15 +3,14 @@ requires = ["setuptools>=75", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "lidc-misclassification"
-version = "0.1.0"
-description = "Reproducible analysis of reference-label misclassification in LIDC-IDRI"
+name = "lidc-annotation-effects"
+version = "0.2.0"
+description = "Controlled analysis of annotation data quality effects in LIDC-IDRI"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
-authors = [{ name = "LIDC misclassification study team" }]
+authors = [{ name = "LIDC annotation-effects study team" }]
 dependencies = [
-  "krippendorff>=0.8.2,<0.9",
   "matplotlib>=3.9,<4",
   "numpy>=2.0,<3",
   "pandas>=2.2,<3",
@@ -19,7 +18,6 @@ dependencies = [
   "pydicom>=3.0,<4",
   "scikit-learn>=1.6,<2",
   "scipy>=1.14,<2",
-  "xlrd>=2.0.2,<3",
 ]
 
 [project.optional-dependencies]

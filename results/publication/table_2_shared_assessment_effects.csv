@@ -1,0 +1,9 @@
+geometry,evaluation,metric,effect_definition,mean_effect,ci_lower,ci_upper,assignment_sd,partition_sd
+fixed,reader_c,auc,"AUC(training-label source) - AUC(other source), evaluated against C",-0.0279851909666007,-0.0341207403300539,-0.0215488605124394,0.0059408478960162,0.0004743473845015
+fixed,reader_c,brier_score,"Brier(other source) - Brier(training-label source), evaluated against C",-0.0124671728127629,-0.0156955315011518,-0.0092595107581741,0.0021241642383753,0.0002334745395508
+fixed,training_reader,auc,AUC(same-assessment source) - AUC(other source),0.0395400645394901,0.0295486898487764,0.0488010811000464,0.0033335554690385,0.0006550581067769
+fixed,training_reader,brier_score,Brier(other source) - Brier(same-assessment source),0.0185964290965135,0.0136321234135005,0.0231755197821168,0.0019201267761618,0.0003161342509101
+reader_specific,reader_c,auc,"AUC(training-label source) - AUC(other source), evaluated against C",-0.0262899067361545,-0.0325227555461724,-0.0200449714472232,0.0061678140779804,0.0004248024685067
+reader_specific,reader_c,brier_score,"Brier(other source) - Brier(training-label source), evaluated against C",-0.0112532373269877,-0.0144132502388829,-0.0082427998046254,0.0021006065977565,0.000234321959856
+reader_specific,training_reader,auc,AUC(same-assessment source) - AUC(other source),0.0438760791772544,0.0337257253118194,0.0541302424930128,0.0041574859185098,0.000681020933789
+reader_specific,training_reader,brier_score,Brier(other source) - Brier(same-assessment source),0.0205199549627232,0.0155900897126043,0.0252958946724819,0.0022005324015742,0.0003305001743989

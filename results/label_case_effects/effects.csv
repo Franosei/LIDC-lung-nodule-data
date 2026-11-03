@@ -1,0 +1,7 @@
+comparison,metric,effect,estimate,ci_lower,ci_upper,confidence_level,valid_bootstrap_repetitions,reference
+label_assignment,auc,median_3_malignant_minus_median_3_benign,-0.10525864746863478,-0.13296310764058467,-0.0801390391812518,0.95,2000,
+label_assignment,brier_score,median_3_malignant_minus_median_3_benign,0.15081537237156875,0.12528529673634414,0.17494460192751762,0.95,2000,
+case_exclusion,auc,exclude_median_3_minus_all_eligible_nodules,0.02858041704384562,0.019589740186585183,0.03829022727863612,0.95,2000,median_3_benign
+case_exclusion,brier_score,exclude_median_3_minus_all_eligible_nodules,-0.04370995900442602,-0.05489785670515296,-0.033461221642900704,0.95,2000,median_3_benign
+case_exclusion,auc,exclude_median_3_minus_all_eligible_nodules,0.1338390645124804,0.1147039256900074,0.15402266596117106,0.95,2000,median_3_malignant
+case_exclusion,brier_score,exclude_median_3_minus_all_eligible_nodules,-0.19452533137599476,-0.21532735593803248,-0.17405528928261801,0.95,2000,median_3_malignant

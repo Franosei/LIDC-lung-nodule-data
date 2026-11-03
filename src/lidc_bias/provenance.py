@@ -13,7 +13,6 @@ from pathlib import Path
 from typing import Any
 
 TRACKED_PACKAGES = (
-    "krippendorff",
     "matplotlib",
     "numpy",
     "pandas",
@@ -21,7 +20,6 @@ TRACKED_PACKAGES = (
     "pydicom",
     "scikit-learn",
     "scipy",
-    "xlrd",
 )
 
 
@@ -65,12 +63,44 @@ def git_revision(project_root: Path) -> str | None:
     return result.stdout.strip()
 
 
+def git_worktree_dirty(project_root: Path) -> bool | None:
+    """Report whether tracked or untracked files differ from the recorded revision."""
+    try:
+        result = subprocess.run(
+            ["git", "status", "--porcelain", "--untracked-files=all"],
+            cwd=project_root,
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return None
+    return bool(result.stdout.strip())
+
+
+def analysis_code_sha256(project_root: Path, config_path: Path) -> str:
+    """Hash the executable study source, project metadata and selected config."""
+    files = sorted((project_root / "src" / "lidc_bias").rglob("*.py"))
+    files.extend([project_root / "pyproject.toml", config_path])
+    digest = hashlib.sha256()
+    for path in sorted(set(files)):
+        relative = path.relative_to(project_root).as_posix().encode("utf-8")
+        digest.update(len(relative).to_bytes(8, "big"))
+        digest.update(relative)
+        with path.open("rb") as handle:
+            while chunk := handle.read(1024 * 1024):
+                digest.update(chunk)
+    return digest.hexdigest()
+
+
 def base_manifest(project_root: Path, config_path: Path, stage: str) -> dict[str, Any]:
     """Return common run metadata for a pipeline-stage manifest."""
     return {
         "stage": stage,
         "created_at_utc": datetime.now(UTC).isoformat(),
         "git_revision": git_revision(project_root),
+        "git_worktree_dirty": git_worktree_dirty(project_root),
+        "analysis_code_sha256": analysis_code_sha256(project_root, config_path),
         "config_path": str(config_path.relative_to(project_root)),
         "config_sha256": sha256_file(config_path),
         "python": sys.version,

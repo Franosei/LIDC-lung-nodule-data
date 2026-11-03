@@ -1,0 +1,77 @@
+{
+  "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
+  "created_at_utc": "2026-11-03T07:40:58.471399+00:00",
+  "git_revision": "f7b83006eb4c90d20ee7226a2a5d2634446dea3e",
+  "git_worktree_dirty": true,
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "34ec1d30a0b0e9688206f873b2c3df1c7086d32a2326ab58a72ecea0968ee950"
+  },
+  "method": {
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "case_exclusion_rule": "median_malignancy_rating_equals_3",
+    "cross_validation_folds": 5,
+    "cross_validation_repetitions": 20,
+    "cross_validation_unit": "patient",
+    "fixed_model": "combined_logistic",
+    "fixed_prediction_training_reference": "median_exclude_3",
+    "primary_references": [
+      "median_3_benign",
+      "median_3_malignant"
+    ],
+    "sensitivity_references": [
+      "any_reader_4_or_5",
+      "random_reader"
+    ]
+  },
+  "outputs": {
+    "bootstrap_replicates": {
+      "path": "results\\label_case_effects\\bootstrap_replicates.parquet",
+      "sha256": "9a9cc21a9c801de0f27305ea46f9c06883b6df15b0a57ee22d82890e3212466d"
+    },
+    "case_list": {
+      "path": "results\\label_case_effects\\case_list.csv",
+      "sha256": "9ac15b603b11e30485e025d140cb6bf7b61dabe22d496d958cacb2e82e1ebedc"
+    },
+    "effects": {
+      "path": "results\\label_case_effects\\effects.csv",
+      "sha256": "fbc2dfbae3d728d3058e8860daeffcea740efbdcd53e0c3d203ba3e4ecf24e99"
+    },
+    "partitions": {
+      "path": "results\\label_case_effects\\partitions.csv",
+      "sha256": "7670756ca6cf6a521a4fd0642312af086c3db40acb59da872be9c80a08098260"
+    },
+    "performance": {
+      "path": "results\\label_case_effects\\performance.csv",
+      "sha256": "f8d7c96b231726aecebd2816938e6818d51c7371a82dff17f8bd42f71d2be50f"
+    },
+    "predictions": {
+      "path": "results\\label_case_effects\\predictions.parquet",
+      "sha256": "bc9155f03832c51c51784fbaa150ef2ffe8fcebf479e40eb01862ed791f6bbc3"
+    },
+    "reference_definitions": {
+      "path": "results\\label_case_effects\\reference_definitions.csv",
+      "sha256": "71e29f06baad1ed1c78d2b2081ab0f3bc89b8aadcc9f82b651f15c996e59f7a2"
+    }
+  },
+  "packages": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "annotations": 5031,
+    "nodules": 1378,
+    "patients": 690
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "label_case_effects"
+}

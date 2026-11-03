@@ -1,4 +1,4 @@
-"""Command-line interface for the reproducible study pipeline."""
+"""Command-line interface for the focused reproducible study pipeline."""
 
 from __future__ import annotations
 
@@ -10,20 +10,11 @@ from pathlib import Path
 
 from .config import load_config
 from .errors import LidcBiasError
-from .figures import create_publication_figures
 from .ingestion import run_ingestion
-from .rq1 import run_rq1
-from .rq2 import run_rq2
-from .rq3 import run_rq3
-from .rq4 import run_rq4
-from .rq5 import run_rq5
-from .rq6 import run_rq6
-from .rq7 import run_rq7
-from .validation import (
-    raise_for_failed_report,
-    validate_processed_files,
-    write_validation_report,
-)
+from .label_case_effects import run_label_case_effects
+from .publication import create_publication_outputs
+from .shared_assessment import run_shared_assessment
+from .validation import raise_for_failed_report, validate_processed_files, write_validation_report
 
 LOGGER = logging.getLogger(__name__)
 
@@ -31,21 +22,16 @@ LOGGER = logging.getLogger(__name__)
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="lidc-bias",
-        description="Reproducible LIDC-IDRI reference-label misclassification analysis",
+        description="Controlled analysis of annotation effects in LIDC-IDRI",
     )
     parser.add_argument(
         "command",
         choices=(
             "ingest",
             "validate",
-            "rq1",
-            "rq2",
-            "rq3",
-            "rq4",
-            "rq5",
-            "rq6",
-            "rq7",
-            "figures",
+            "label-case-effects",
+            "shared-assessment",
+            "publication",
             "run",
         ),
         help="Pipeline stage to execute",
@@ -86,33 +72,18 @@ def main(arguments: Sequence[str] | None = None) -> int:
             run_ingestion(config)
         elif options.command == "validate":
             _run_validation(options.config)
-        elif options.command == "rq1":
-            run_rq1(config)
-        elif options.command == "rq2":
-            run_rq2(config)
-        elif options.command == "rq3":
-            run_rq3(config)
-        elif options.command == "rq4":
-            run_rq4(config)
-        elif options.command == "rq5":
-            run_rq5(config)
-        elif options.command == "rq6":
-            run_rq6(config)
-        elif options.command == "rq7":
-            run_rq7(config)
-        elif options.command == "figures":
-            create_publication_figures(config)
+        elif options.command == "label-case-effects":
+            run_label_case_effects(config)
+        elif options.command == "shared-assessment":
+            run_shared_assessment(config)
+        elif options.command == "publication":
+            create_publication_outputs(config)
         elif options.command == "run":
             run_ingestion(config)
             _run_validation(options.config)
-            run_rq1(config)
-            run_rq6(config)
-            run_rq2(config)
-            run_rq3(config)
-            run_rq4(config)
-            run_rq5(config)
-            run_rq7(config)
-            create_publication_figures(config)
+            run_label_case_effects(config)
+            run_shared_assessment(config)
+            create_publication_outputs(config)
     except LidcBiasError as error:
         LOGGER.error("%s", error)
         return 2

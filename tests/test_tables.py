@@ -27,7 +27,7 @@ def _annotation(nodule_id, patient_id, rating, volume, surface, reader):
     }
 
 
-def test_build_nodule_table_averages_reader_features_and_preserves_disagreement():
+def test_build_nodule_table_averages_ordered_features_and_modes_nominal_features():
     annotations = pd.DataFrame(
         [
             _annotation("n1", "p1", 1, 100.0, 50.0, 1),
@@ -45,3 +45,15 @@ def test_build_nodule_table_averages_reader_features_and_preserves_disagreement(
     assert not bool(nodules.loc["n1", "all_readers_agree"])
     assert np.isclose(nodules.loc["n1", "log_volume"], np.mean(np.log([100.0, 400.0])))
     assert bool(nodules.loc["n2", "all_readers_agree"])
+
+
+def test_nominal_characteristic_uses_mode_not_arithmetic_mean():
+    rows = [
+        _annotation("n1", "p1", 2, 100.0, 50.0, reader)
+        for reader in range(1, 4)
+    ]
+    rows[0]["calcification"] = 1
+    rows[1]["calcification"] = 1
+    rows[2]["calcification"] = 6
+    nodule = build_nodule_table(pd.DataFrame(rows)).iloc[0]
+    assert nodule["calcification"] == 1

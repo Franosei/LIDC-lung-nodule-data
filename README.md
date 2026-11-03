@@ -1,33 +1,25 @@
-# Misclassification bias in clinical AI
+# Annotation Data Quality and Bias in Clinical AI Evaluation
 
-This repository contains the reproducible Python pipeline for the study
-"Misclassification bias in the evaluation of clinical AI: a study using the
-LIDC-IDRI lung nodule annotations".
+Reproducible code for a controlled LIDC-IDRI study of three annotation-related
+effects:
 
-The current implementation covers:
+1. **Label assignment:** score unchanged predictions against two treatments of
+   median malignancy rating 3 on the same nodules.
+2. **Case exclusion:** under each unchanged full-cohort median rule, compare the
+   full cohort with the subset obtained by excluding median rating 3.
+3. **Shared assessment:** compare predictor characteristics and labels from the
+   same annotation record with characteristics from another record, using a
+   reciprocal A/B design and an additional C-label check.
 
-- immutable ingestion of the TCIA DICOM Structured Reports and diagnosis workbook;
-- provenance manifests and explicit data-quality validation;
-- canonical annotation, nodule and diagnosis tables;
-- RQ1 inter-reader disagreement;
-- RQ2 model evaluation under six alternative reference standards;
-- RQ3 shared-rater error;
-- RQ4 panel relabelling;
-- RQ5 data quantity versus label quality;
-- RQ6 exchangeable-rater latent class correction;
-- RQ7 evaluation against confirmed diagnosis;
-- Figures in vector and 600 dpi raster formats.
-
+The study does not combine these effects into a data-quality score and does not
+claim diagnostic validity. Its contribution is a controlled evaluation
+procedure for separating effects that are otherwise easily confounded.
 
 ## Data
 
-Place these public source files in the repository root:
-
-- `LIDC-IDRI-StandardizedRepresentation-March2020-manifest.zip`
-- `tcia-diagnosis-data-2012-04-20.xls`
-
-The pipeline reads the archive without extracting it and never modifies either
-source file. Generated data and results are ignored by Git.
+Place `LIDC-IDRI-StandardizedRepresentation-March2020-manifest.zip` in the
+repository root. The pipeline reads the archive without modifying it and
+creates canonical annotation, segmentation and nodule tables.
 
 ## Installation
 
@@ -39,44 +31,33 @@ py -m venv .venv
 .venv\Scripts\python -m pip install -e ".[dev]"
 ```
 
-## Run order
+## Run the study
 
 ```powershell
 lidc-bias ingest --config config/analysis.toml
 lidc-bias validate --config config/analysis.toml
-lidc-bias rq1 --config config/analysis.toml
-lidc-bias rq6 --config config/analysis.toml
-lidc-bias rq2 --config config/analysis.toml
-lidc-bias rq3 --config config/analysis.toml
-lidc-bias rq4 --config config/analysis.toml
-lidc-bias rq5 --config config/analysis.toml
-lidc-bias rq7 --config config/analysis.toml
-lidc-bias figures --config config/analysis.toml
+lidc-bias label-case-effects --config config/analysis.toml
+lidc-bias shared-assessment --config config/analysis.toml
+lidc-bias publication --config config/analysis.toml
 ```
 
-Run the complete implemented workflow with:
+Run all stages with:
 
 ```powershell
 lidc-bias run --config config/analysis.toml
 ```
 
-Ingestion is the slow step. It reads every DICOM object once and writes cached
-Parquet tables. Later stages use those tables and do not reopen the archive.
+The output includes case lists, patient partitions, 20 annotation-assignment
+seeds, fitted-model predictions, bootstrap replicates, compact result tables,
+input/output checksums, package versions and the Git revision. The two primary
+metrics are AUC and Brier score.
 
-## Reproducibility
-
-All statistical and engineering settings are held in `config/analysis.toml`.
-Each stage writes a JSON manifest containing input checksums, the configuration
-checksum, package versions and the Git revision. Random operations use the
-configured master seed and derived deterministic seeds.
-
-RQ6 runs before analyses that consume its suspicious-class posterior. The
-pipeline fails with an explicit dependency error if a required upstream result
-is absent. Figure source data and every stage's outputs are checksummed.
-
-## Quality checks
+## Verification
 
 ```powershell
 py -m pytest
 py -m ruff check .
 ```
+
+The exact operational definitions and effect directions are in
+[`docs/methods.md`](docs/methods.md).

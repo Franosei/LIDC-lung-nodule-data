@@ -1,4 +1,4 @@
-"""Radiologist-derived reference-standard definitions for RQ2."""
+"""Radiologist-derived reference definitions used by the focused study."""
 
 from __future__ import annotations
 
@@ -15,7 +15,6 @@ IMPLEMENTED_REFERENCES = (
     "median_3_malignant",
     "any_reader_4_or_5",
     "random_reader",
-    "latent_class",
 )
 
 REFERENCE_DESCRIPTIONS = {
@@ -24,7 +23,6 @@ REFERENCE_DESCRIPTIONS = {
     "median_3_malignant": "Median rating at least 3 is malignant",
     "any_reader_4_or_5": "Malignant if any reader assigns rating 4 or 5",
     "random_reader": "One deterministic random reader; rating 4 or 5 is malignant",
-    "latent_class": "Suspicious-class posterior at the configured RQ6 threshold",
 }
 
 
@@ -32,9 +30,8 @@ def build_reference_labels(
     nodules: pd.DataFrame,
     annotations: pd.DataFrame,
     seed: int,
-    latent_posterior: pd.DataFrame | None = None,
 ) -> pd.DataFrame:
-    """Build the six prespecified RQ2 reference definitions."""
+    """Build the training, primary and sensitivity reference definitions."""
     required_nodule = {"nodule_id", "malignancy_median"}
     required_annotation = {"nodule_id", "annotation_id", "malignancy"}
     if missing := required_nodule - set(nodules.columns):
@@ -60,16 +57,6 @@ def build_reference_labels(
         ratings = group["malignancy"].to_numpy(dtype=int)
         selected[str(nodule_id)] = float(ratings[rng.integers(0, len(ratings))] >= 4)
     labels["random_reader"] = labels["nodule_id"].map(selected)
-    if latent_posterior is None:
-        labels["latent_class"] = np.nan
-    else:
-        required_latent = {"nodule_id", "latent_class"}
-        if missing := required_latent - set(latent_posterior.columns):
-            raise AnalysisError(f"RQ6 posterior lacks fields: {sorted(missing)}")
-        latent = latent_posterior.set_index("nodule_id")["latent_class"]
-        labels["latent_class"] = labels["nodule_id"].map(latent)
-        if labels["latent_class"].isna().any():
-            raise AnalysisError("RQ6 posterior does not cover every RQ2 nodule")
     return labels.drop(columns="malignancy_median")
 
 
@@ -82,7 +69,6 @@ def reference_summary(labels: pd.DataFrame) -> pd.DataFrame:
             {
                 "reference": reference,
                 "description": REFERENCE_DESCRIPTIONS[reference],
-                "status": "implemented",
                 "available_nodules": len(values),
                 "malignant_nodules": int(values.sum()),
                 "prevalence": float(values.mean()),

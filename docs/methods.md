@@ -1,230 +1,140 @@
 # Implemented analysis specification
 
-## Scope
+## Objective and scope
 
-The pipeline implements source ingestion, provenance, validation, all seven
-research questions and the publication figure. Every operational choice that
-is not fixed by the study protocol is exposed in `config/analysis.toml`.
+The analysis determines how reference-label construction, exclusion of
+indeterminate cases and overlap between predictor and label assessments affect
+reported model performance while controlling cases, predictions and patient
+partitions. It is a strengthened analysis of an existing study, not an
+untouched confirmatory experiment.
 
-## Source identity and grouping
+Only three comparisons are in the active pipeline. Earlier analyses of reader
+agreement, progressive panel relabelling, data quantity, latent classes and
+confirmed diagnosis are not part of this study.
+The earlier latent-class fitting routine remains under
+`src/lidc_bias/exploratory/` for reproducibility, but its output is not consumed
+by any active stage because the exchangeability and conditional-independence
+assumptions do not resolve the study's main question.
 
-The DICOM Structured Reports are read directly from the TCIA ZIP archive.
-Each annotation is identified by its SR SOP Instance UID. Each nodule is
-identified by the combination of:
+## Source identity and population
 
-1. TCIA patient identifier;
-2. source CT Series Instance UID;
-3. DICOM measurement-group Tracking Identifier.
+Annotations are identified by Structured Report SOP Instance UID. A nodule is
+identified by patient ID, source CT Series Instance UID and DICOM measurement-
+group Tracking Identifier. Validation checks identifier uniqueness,
+SR-to-segmentation linkage, source-member checksums, missingness, rating ranges,
+geometry validity, reader counts, malignancy disagreement and the number of
+nodules with median rating 3.
 
-The composite is stored as a stable SHA-256-derived identifier. Folder names
-are retained for provenance but are not used as the analytical key. The source
-Series Instance UID and Tracking Identifier produce the published total of
-2,651 nodules and the expected reader-count distribution.
+The analysis population contains nodules with three or four annotation records.
+The records are anonymous assessments: reader identity cannot be followed
+across patients, so A, B and C are within-nodule annotation roles rather than
+named radiologists.
 
-The Tracking Unique Identifier is shared by the reader annotations grouped as
-one nodule. Validation therefore requires each Tracking Unique Identifier to
-map to exactly one canonical nodule and each canonical nodule to have exactly
-one Tracking Unique Identifier. It does not incorrectly require one value per
-annotation.
+## Predictors and preprocessing
 
-This grouping follows the DICOM measurement-report model, in which tracking
-identifiers identify a finding and must correspond between a Structured Report
-and its referenced Segmentation object. See the
-[DICOM structured-report templates](https://dicom.nema.org/medical/dicom/current/output/html/part16.html).
+The fixed model is regularised combined logistic regression. Geometry predictors
+are log volume, diameter, log surface area and compactness. Ordinal semantic
+predictors are subtlety, sphericity, margin, lobulation, spiculation and texture.
+Internal structure and calcification are nominal and are one-hot encoded; their
+integer codes are not averaged or treated as an ordered numerical scale.
 
-## Rating conversion
+Missing numeric values are median-imputed within each training fold. Missing
+nominal values are most-frequent-imputed within the training fold. Numeric
+predictors are standardised within the training fold. All model settings are
+fixed in `config/analysis.toml`.
 
-Every semantic characteristic is read from its coded DICOM content item.
-Mappings are explicit in `src/lidc_bias/ratings.py`. Unknown code and meaning
-combinations stop ingestion. They are never converted from folder names or
-silently treated as missing.
+## Recorded patient partitions
 
-One source annotation lacks the `Internal structure` content item. Its value is
-stored as missing and counted in the validation report. Reader-level feature
-means use the available ratings. Any remaining model-level missing value is
-imputed from the training fold only. Malignancy ratings are required and
-missing malignancy stops validation.
+Both analyses use 5-fold patient-grouped cross-validation repeated 20 times.
+For each analysis, one partition table is generated before model fitting and is
+reused for every comparison in that analysis. Partitions are approximately
+stratified by the fixed full-cohort rule `median_3_benign`; this avoids changing
+folds when the training label or annotation roles change. Every partition row,
+repetition and fold is released.
 
-The affected annotation is the only annotation for its nodule. The resulting
-nodule-level missing value is outside the three-to-four-reader RQ1 and RQ2
-population. It remains in the canonical table.
+## Comparison 1: label assignment
 
-## Geometry
+One combined logistic model is trained under `median_exclude_3`: median rating 3
+is absent from training, ratings below 3 are benign and ratings above 3 are
+malignant. Each nodule receives an out-of-fold probability in every partition
+repetition, including median-3 nodules, and the 20 probabilities are averaged.
 
-Volume, diameter and surface area are read with their UCUM units and required
-to be positive. Logarithms are natural logarithms. Compactness is the
-dimensionless isoperimetric quotient:
+Those unchanged probabilities are scored on the same full cohort under:
 
-`36 * pi * volume^2 / surface_area^3`
+- `median_3_benign`: malignant when the median rating is greater than 3;
+- `median_3_malignant`: malignant when the median rating is at least 3.
 
-A sphere has compactness 1. Compactness is calculated for each reader's
-segmentation and then averaged across readers, as required by the study
-protocol.
+The reported paired effect is the second rule minus the first rule for both AUC
+and Brier score. Any-reader-positive (at least one rating 4 or 5) and one seeded
+random-reader rule (rating 4 or 5) are sensitivity references, not primary
+comparisons.
 
-## Analysis population
+## Comparison 2: case exclusion
 
-RQ1 to RQ4 and RQ6 use nodules with three or four annotations. RQ5 additionally
-uses the 1,259 nodules with one or two annotations. RQ7 applies the strict
-diagnosis linkage described below. The 14 nodules with more than four
-annotations remain in the canonical tables but are not analysed.
+For each of the two full-cohort median rules separately, the same probabilities
+and unchanged labels are evaluated on:
 
-## RQ1
+- all eligible three-to-four-record nodules;
+- the subset after removing nodules whose median rating equals 3.
 
-Ordinal Krippendorff alpha uses the five-level malignancy rating. Binary alpha
-maps ratings 1 and 2 to benign, ratings 4 and 5 to malignant, and rating 3 to
-missing. Pairwise binary agreement applies the same rule. Other outcomes are
-exact pairwise agreement, unanimous ratings, and the proportion of nodules
-with at least one benign rating and at least one malignant rating.
+The effect is restricted population minus full population. Because the label
+rule is unchanged within a comparison, this effect measures population
+selection rather than mixing selection with relabelling. Sample retention and
+class counts are available from the released case list and reference table.
 
-Confidence intervals use a non-parametric patient-level percentile bootstrap.
-When a patient is sampled more than once, its nodules receive distinct
-bootstrap identifiers.
+## Comparison 3: shared assessment
 
-## RQ2 references
+For each of 20 recorded assignment seeds, three distinct annotation records in
+each nodule are assigned to A, B and C. For target A, models using A-source and
+B-source predictors are trained on A labels and evaluated against A labels.
+The analysis then reverses the roles: B-source and A-source models are trained
+on B labels and evaluated against B labels. Both directional comparisons are
+also evaluated against C labels. The A and B directional effects are averaged
+within each assignment so neither selected record is privileged.
 
-The implemented references are:
+Binary annotation labels are 1 for malignancy ratings 4 or 5 and 0 for ratings
+1, 2 or 3. Every source comparison uses the same cases, training labels,
+preprocessing, regularisation, model type and patient partitions.
 
-- `median_exclude_3`: malignant when the median is above 3, with median 3 excluded;
-- `median_3_benign`: malignant when the median is above 3;
-- `median_3_malignant`: malignant when the median is at least 3;
-- `any_reader_4_or_5`: malignant when any reader gives rating 4 or 5;
-- `random_reader`: one seeded reader per nodule, malignant for rating 4 or 5;
-- `latent_class`: suspicious-class posterior at the configured probability threshold.
+Two geometry analyses are reported:
 
-The code handles half-integer medians directly. The random-reader selection is
-made once from annotations sorted by stable source identifiers and is recorded
-through the configured seed.
+- **Fixed geometry (primary):** nodule-level geometry averaged across all
+  available annotations; semantic characteristics come from A or B.
+- **Reader-specific geometry (sensitivity):** geometry and semantic
+  characteristics both come from A or B.
 
-## Models and validation
+For AUC, the same-assessment advantage is `AUC(same) - AUC(other)`. For Brier
+score, it is `Brier(other) - Brier(same)`. Positive values therefore always mean
+better apparent performance when predictors and labels share an assessment.
+Those directions describe evaluation against A or B training labels. Against C,
+the reported contrast is training-label-source predictors minus other-source
+predictors for AUC (and the reversed subtraction for Brier score); neither
+predictor source shares C's assessment. The A/B result is described as a
+same-assessment advantage, not proof that one annotation is independent
+clinical truth.
 
-The four models are geometry logistic regression, semantic logistic
-regression, combined logistic regression and combined random forest. Every
-model is a scikit-learn pipeline. Median imputation and logistic scaling are
-fitted within each training fold.
+## Uncertainty and reporting
 
-Validation uses five patient-grouped, approximately stratified folds repeated
-20 times by default. A patient cannot occur in both training and test data.
-Each nodule receives one out-of-fold prediction per repetition. Repeated
-probabilities are averaged before the main metric and patient-bootstrap
-calculations.
+AUC is primary and Brier score is supporting. Patients are sampled with
+replacement while all their nodules are retained. Label and exclusion effects
+use the same patient draw for both conditions. Shared-assessment bootstrap draws
+preserve all 20 assignment results and both reciprocal directions, then average
+the paired effects. These intervals are conditional on the fitted models.
 
-The reported metrics are AUC, accuracy, sensitivity, specificity, prevalence,
-Brier score, calibration intercept and calibration slope. Classification uses
-a probability threshold of 0.5. Calibration parameters are fitted by maximum
-likelihood using the logit of the out-of-fold probability.
-The fit uses step-halved Newton updates and accepts only a finite converged
-maximum-likelihood estimate. Bootstrap samples with complete separation or a
-non-convergent calibration fit are recorded as missing and excluded from the
-percentile interval. Every summary reports the number of valid bootstrap
-replicates.
+Assignment variability is the standard deviation of reciprocal effects across
+the 20 assignments. Partition variability is reported separately as the
+standard deviation across the 20 cross-validation repetitions after averaging
+assignments and reciprocal directions. No metric is selected after inspecting
+which one produces the strongest result.
 
-## Fixed predictions and excluded cases
+## Paper outputs
 
-Configuration identifies one fixed prediction source. The default is combined
-logistic regression trained under `median_exclude_3`. Those unchanged
-predictions are evaluated against every implemented reference.
+The publication stage creates only:
 
-The same model predicts median-3 nodules out of sample because fold assignment
-includes all eligible-population patients while model fitting uses only cases
-labelled by the training reference. The excluded-case analysis evaluates these
-predictions against the explicitly configured `any_reader_4_or_5` reference.
+- Table 1: reference definitions and retained-case summaries;
+- Figure 1: separate label-assignment and case-exclusion effects;
+- Table 2: matched shared-assessment effects with assignment and partition
+  variability.
 
-## RQ3 shared-rater error
-
-Three distinct annotations are selected without replacement within every
-nodule using a fixed seed. Reader A supplies the binary label. Reader A or
-reader B supplies the individual annotation features, and reader C supplies
-the independent evaluation label. Geometry and semantic logistic models use
-identical patient-grouped folds. Same-reader inflation is the paired AUC
-difference between reader-A and reader-B feature models when both are scored
-against reader A. Model-family rank differences are also estimated against
-the independent reader C. Confidence intervals use paired patient bootstrap
-samples.
-
-## RQ4 panel relabelling
-
-The local reader is reader A from RQ3. Ratings 1 and 2 are benign, ratings 4
-and 5 are malignant, and rating 3 is excluded from model fitting. The geometry
-classifier is frozen after repeated patient-grouped out-of-fold prediction.
-Locally indeterminate nodules are placed in one fixed seeded random order.
-Nested panels relabel the first 0%, 10%, and so on through 100% as malignant.
-The order is independent of model predictions and nodule features.
-
-Frozen-model performance is reported at the fixed probability threshold. The
-moving diameter result is a separate panel-implied quantity: at each step, an
-unpenalised univariable logistic model relates the panel outcome to diameter,
-and the reported boundary is the diameter with fitted probability 0.5. The
-real any-reader panel and the RQ6 latent reference are evaluated separately.
-
-## RQ5 data quantity and label quality
-
-The consensus set comprises all 1,378 three-to-four-reader nodules, labelled
-by `median_3_benign`. The additional set comprises 1,259 one-to-two-reader
-nodules, each assigned one seeded reader label. Additions are 0%, 25%, 50%,
-75% and 100% of the available additional set. Test folds are identical across
-addition levels. No additional nodule from a held-out test patient is allowed
-into that fold's training data.
-
-All four model specifications are evaluated against the consensus label, the
-latent-class label and the fixed 38-nodule diagnosis subset. Diagnosis-linked
-patients are excluded from every model used for the diagnosis evaluation.
-Every addition level is compared directly with the 0% baseline using a paired
-patient-level bootstrap of the AUC difference.
-
-## RQ6 latent class model
-
-The exchangeable-rater model treats each nodule as a five-category rating-count
-vector. Conditional on latent class, ratings are independent draws from a
-class-specific categorical distribution. Models with one through five classes
-are fitted by expectation-maximisation using 30 random starts. BIC uses one
-nodule as the independent observational unit and counts `5K - 1` parameters
-for K classes. Classes are ordered by expected malignancy rating. The most
-suspicious class supplies the soft posterior and the configured posterior
-threshold supplies the binary downstream reference.
-
-Implied single-reader sensitivity is the suspicious class probability of a
-rating of 4 or 5. Specificity is the mixing-proportion-weighted probability of
-a rating of 1 to 3 among all other classes. The conditional-independence
-assumption is a limitation, not a claim about radiologist behaviour.
-
-## RQ7 confirmed diagnosis
-
-A patient is linked only when the workbook contains exactly one non-unknown
-nodule diagnosis and the main population contains exactly one nodule for that
-patient. This yields 38 nodules: 14 benign, 12 primary lung cancers and 12
-metastases. The diagnosis-linked patients are excluded from model training.
-
-The combined logistic model is scored against confirmed diagnosis and all six
-radiologist-derived references. The radiologists' mean malignancy rating is
-also scored against diagnosis. Robustness subsets are pathology confirmation,
-primary lung cancer versus benign nodules, and patients with exactly one
-canonical nodule in the entire dataset.
-
-## Publication figure
-
-The main seven-panel figure is generated only from versioned result tables.
-It is exported as vector PDF and SVG and as 600 dpi PNG and LZW-compressed
-TIFF. A source-data CSV, caption and checksummed manifest accompany the image.
-
-## Provenance
-
-Each stage records source or processed-input SHA-256 checksums, configuration
-checksum, package versions, Git revision, random seeds and output checksums.
-The source archive and workbook remain unchanged.
-
-The diagnosis workbook contains whitespace-only cells in otherwise unused
-nodule slots. These cells are normalised to missing values. They are not
-converted to diagnosis code zero.
-
-Fifteen patients in the diagnosis workbook have no nodule annotation in the
-875-patient Standardized Representation. They remain in the diagnosis table
-and are reported by validation, but cannot be linked to a canonical nodule.
-
-A DICOM staging cache is keyed by the complete archive SHA-256 digest and an
-explicit cache-schema version. A workbook or downstream validation failure can
-therefore be corrected without reopening every DICOM object. A changed archive
-or parser schema invalidates the cache.
-
-The standardised DICOM representation was produced using pylidc for XML
-parsing, clustering and geometry, and dcmqi for DICOM encoding. See the
-[TCIA analysis-result description](https://www.cancerimagingarchive.net/analysis-result/dicom-lidc-idri-nodules/).
+Manifests record the configuration checksum, input/output checksums, package
+versions, random seeds and Git revision.

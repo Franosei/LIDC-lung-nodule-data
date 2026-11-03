@@ -1,12 +1,12 @@
 import pandas as pd
 
-from lidc_bias.config import LogisticConfig, RandomForestConfig, Rq2Config
-from lidc_bias.modelling import cross_validated_predictions
+from lidc_bias.config import LabelCaseEffectsConfig, LogisticConfig
+from lidc_bias.modelling import cross_validated_predictions, make_patient_partitions
 from lidc_bias.tables import ALL_MODEL_FEATURES
 
 
 def _config():
-    return Rq2Config(
+    return LabelCaseEffectsConfig(
         minimum_readers=3,
         maximum_readers=4,
         cross_validation_folds=2,
@@ -14,15 +14,16 @@ def _config():
         bootstrap_repetitions=10,
         confidence_level=0.95,
         random_reader_seed_offset=1,
-        fixed_prediction_reference="median_exclude_3",
-        fixed_prediction_model="combined_logistic",
-        excluded_case_reference="any_reader_4_or_5",
+        partition_seed_offset=2,
+        training_reference="median_exclude_3",
+        model="combined_logistic",
+        primary_references=("median_3_benign", "median_3_malignant"),
+        sensitivity_references=("any_reader_4_or_5", "random_reader"),
         logistic_regression=LogisticConfig(1.0, 1000, None),
-        random_forest=RandomForestConfig(10, 1, "sqrt", None, 1),
     )
 
 
-def test_cross_validated_predictions_cover_each_nodule_once_per_repetition():
+def test_recorded_partitions_are_reused_and_predictions_cover_every_nodule():
     rows = []
     for index in range(20):
         label = index % 2
@@ -30,15 +31,26 @@ def test_cross_validated_predictions_cover_each_nodule_once_per_repetition():
             "nodule_id": f"n{index}",
             "patient_id": f"p{index}",
             "reference": float(label),
+            "partition_stratum": label,
         }
         for feature_index, feature in enumerate(ALL_MODEL_FEATURES):
-            row[feature] = label + feature_index / 100 + index / 1000
+            row[feature] = int(label + feature_index % 2)
         rows.append(row)
+    frame = pd.DataFrame(rows)
+    partitions = make_patient_partitions(frame, "partition_stratum", 2, 2, seed=20)
     predictions = cross_validated_predictions(
-        pd.DataFrame(rows), "reference", "combined_logistic", _config(), master_seed=31
+        frame,
+        "reference",
+        "combined_logistic",
+        _config(),
+        master_seed=31,
+        partitions=partitions,
     )
 
     assert len(predictions) == 40
     assert not predictions.duplicated(["nodule_id", "repetition"]).any()
     assert predictions["probability"].between(0, 1).all()
     assert set(predictions.groupby("repetition")["fold"].nunique()) == {2}
+    expected = partitions.sort_values(["nodule_id", "repetition"])["fold"].tolist()
+    observed = predictions.sort_values(["nodule_id", "repetition"])["fold"].tolist()
+    assert observed == expected

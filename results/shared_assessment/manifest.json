@@ -1,0 +1,109 @@
+{
+  "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+  "config_path": "config\\analysis.toml",
+  "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
+  "created_at_utc": "2026-11-03T07:41:03.332837+00:00",
+  "git_revision": "f7b83006eb4c90d20ee7226a2a5d2634446dea3e",
+  "git_worktree_dirty": true,
+  "inputs": {
+    "annotations": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+    "nodules": "34ec1d30a0b0e9688206f873b2c3df1c7086d32a2326ab58a72ecea0968ee950"
+  },
+  "method": {
+    "assignment_repetitions": 20,
+    "assignment_seeds": [
+      20263426,
+      20263427,
+      20263428,
+      20263429,
+      20263430,
+      20263431,
+      20263432,
+      20263433,
+      20263434,
+      20263435,
+      20263436,
+      20263437,
+      20263438,
+      20263439,
+      20263440,
+      20263441,
+      20263442,
+      20263443,
+      20263444,
+      20263445
+    ],
+    "bootstrap_preserves_all_assignment_results": true,
+    "bootstrap_repetitions": 2000,
+    "bootstrap_unit": "patient",
+    "cross_validation_folds": 5,
+    "cross_validation_repetitions": 20,
+    "cross_validation_unit": "patient",
+    "geometry_analyses": [
+      "fixed_nodule_average",
+      "reader_specific"
+    ],
+    "independent_check": "reader_c",
+    "model": "combined_logistic",
+    "partitions_reused_for_every_assignment_source_and_geometry": true,
+    "reciprocal_targets": [
+      "reader_a",
+      "reader_b"
+    ],
+    "roles": "three distinct annotation records within each nodule"
+  },
+  "outputs": {
+    "assignment_effects": {
+      "path": "results\\shared_assessment\\assignment_effects.csv",
+      "sha256": "4aecd01931a07a69e15ebd85f11145d3479de8970ce90120c21559000308ba55"
+    },
+    "assignments": {
+      "path": "results\\shared_assessment\\assignments.parquet",
+      "sha256": "e770c9a4ea9f0a30556ec9dd05de89978f0515e2646825994e6c60ca37dba9b0"
+    },
+    "averaged_predictions": {
+      "path": "results\\shared_assessment\\averaged_predictions.parquet",
+      "sha256": "4b40ef2b4ef0435615d9292df0168ad241d313f52ef347b81def417305dac192"
+    },
+    "bootstrap_replicates": {
+      "path": "results\\shared_assessment\\bootstrap_replicates.parquet",
+      "sha256": "788db24a2f0e608756c65956bb32b0bdc22decffd031c37324713c194a9e3690"
+    },
+    "directional_assignment_effects": {
+      "path": "results\\shared_assessment\\directional_assignment_effects.csv",
+      "sha256": "1f945cd5f92bf84c6c50b5b00f0e57276002aede381e7a8484e9ed7463863506"
+    },
+    "effect_summary": {
+      "path": "results\\shared_assessment\\effect_summary.csv",
+      "sha256": "253db92947965f736f5c6aac65cab8604e145d82d77d06d5347f280447054243"
+    },
+    "partition_effects": {
+      "path": "results\\shared_assessment\\partition_effects.csv",
+      "sha256": "e7999f0f855086a0c3a5162645e7e2c43edc5b40958cce61f7e43379f12ccf1d"
+    },
+    "partitions": {
+      "path": "results\\shared_assessment\\partitions.csv",
+      "sha256": "3635a70c7c81063c2dbad96de441456018a1e2e276f26b036701e6592c9c8fa6"
+    },
+    "predictions": {
+      "path": "results\\shared_assessment\\predictions.parquet",
+      "sha256": "bffca04602761571c1001db36a7bc13535c40c7a8c7a6235da21dcb0d3311d27"
+    }
+  },
+  "packages": {
+    "matplotlib": "3.10.8",
+    "numpy": "2.4.3",
+    "pandas": "2.3.3",
+    "pyarrow": "23.0.1",
+    "pydicom": "3.0.1",
+    "scikit-learn": "1.8.0",
+    "scipy": "1.17.1"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "population": {
+    "nodules": 1378,
+    "patients": 690
+  },
+  "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "stage": "shared_assessment"
+}

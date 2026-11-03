@@ -8,16 +8,16 @@ import pandas as pd
 from .errors import ValidationError
 
 GEOMETRY_FEATURES = ["log_volume", "diameter_mm", "log_surface_area", "compactness"]
-SEMANTIC_FEATURES = [
+ORDINAL_SEMANTIC_FEATURES = [
     "subtlety",
-    "internal_structure",
-    "calcification",
     "sphericity",
     "margin",
     "lobulation",
     "spiculation",
     "texture",
 ]
+NOMINAL_SEMANTIC_FEATURES = ["internal_structure", "calcification"]
+SEMANTIC_FEATURES = ORDINAL_SEMANTIC_FEATURES + NOMINAL_SEMANTIC_FEATURES
 ALL_MODEL_FEATURES = GEOMETRY_FEATURES + SEMANTIC_FEATURES
 
 
@@ -55,8 +55,16 @@ def build_nodule_table(annotations: pd.DataFrame) -> pd.DataFrame:
         bad_ids = identity_counts.index[(identity_counts > 1).any(axis=1)].tolist()[:10]
         raise ValidationError(f"Nodule identifiers map to conflicting source identities: {bad_ids}")
 
-    feature_columns = ALL_MODEL_FEATURES
-    features = working.groupby("nodule_id", sort=True)[feature_columns].mean()
+    averaged_features = GEOMETRY_FEATURES + ORDINAL_SEMANTIC_FEATURES
+    features = working.groupby("nodule_id", sort=True)[averaged_features].mean()
+    for feature in NOMINAL_SEMANTIC_FEATURES:
+        # Nominal codes have no meaningful arithmetic average. The stable mode
+        # gives one category for the nodule-level model; ties use the lowest code.
+        features[feature] = working.groupby("nodule_id", sort=True)[feature].agg(
+            lambda values: values.mode(dropna=True).min()
+            if not values.mode(dropna=True).empty
+            else np.nan
+        )
     identity = working.groupby("nodule_id", sort=True)[identity_columns].first()
     ratings = working.groupby("nodule_id", sort=True)["malignancy"].agg(
         reader_count="size",

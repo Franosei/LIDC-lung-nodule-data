@@ -65,8 +65,6 @@ def validate_tables(
     annotations: pd.DataFrame,
     segmentations: pd.DataFrame,
     nodules: pd.DataFrame,
-    diagnosis_patients: pd.DataFrame,
-    diagnosis_nodules: pd.DataFrame,
     config: AnalysisConfig,
 ) -> pd.DataFrame:
     """Validate source counts, referential integrity, ranges and model inputs."""
@@ -84,14 +82,6 @@ def validate_tables(
         strict,
     )
     _count_check(report, "nodule_count", len(nodules), expected.nodules, strict)
-    _count_check(
-        report,
-        "diagnosis_patient_count",
-        len(diagnosis_patients),
-        expected.diagnosis_patients,
-        strict,
-    )
-
     reader_counts = nodules["reader_count"]
     count_1_2 = int(reader_counts.between(1, 2).sum())
     count_3_4 = int(reader_counts.between(3, 4).sum())
@@ -122,10 +112,26 @@ def validate_tables(
         "unique_annotation_ids": not annotations["annotation_id"].duplicated().any(),
         "unique_segmentation_ids": not segmentations["segmentation_sop_uid"].duplicated().any(),
         "unique_nodule_ids": not nodules["nodule_id"].duplicated().any(),
-        "unique_diagnosis_patient_ids": not diagnosis_patients["patient_id"].duplicated().any(),
     }
     for name, passed in uniqueness_checks.items():
         report.add(name, passed, passed, True)
+
+    provenance_columns = ["source_member", "source_member_sha256", "annotation_id"]
+    missing_provenance = int(annotations[provenance_columns].isna().any(axis=1).sum())
+    report.add(
+        "annotation_provenance_complete",
+        missing_provenance == 0,
+        missing_provenance,
+        0,
+    )
+    source_hash_counts = annotations.groupby("source_member")["source_member_sha256"].nunique()
+    conflicting_source_hashes = int((source_hash_counts != 1).sum())
+    report.add(
+        "source_member_has_one_checksum",
+        conflicting_source_hashes == 0,
+        conflicting_source_hashes,
+        0,
+    )
 
     tracking_to_nodule = annotations.groupby("tracking_unique_identifier")["nodule_id"].nunique()
     tracking_conflicts = int((tracking_to_nodule != 1).sum())
@@ -216,27 +222,21 @@ def validate_tables(
         "reported; fold-local imputation",
     )
 
-    unknown_diagnosis_patients = sorted(
-        set(diagnosis_patients["patient_id"]) - set(annotations["patient_id"])
-    )
+    disagreement = int((nodules["malignancy_min"] != nodules["malignancy_max"]).sum())
     report.add(
-        "diagnosis_patients_without_standardised_annotations",
+        "malignancy_disagreement_nodules",
         True,
-        len(unknown_diagnosis_patients),
-        "reported; unavailable for nodule linkage",
-        json.dumps(unknown_diagnosis_patients),
+        disagreement,
+        "reported; not a pass/fail completeness criterion",
+    )
+    indeterminate = int((nodules["malignancy_median"] == 3).sum())
+    report.add(
+        "median_rating_3_nodules",
+        True,
+        indeterminate,
+        "reported; defines the case-exclusion subset",
     )
 
-    orphan_nodule_diagnoses = sorted(
-        set(diagnosis_nodules["patient_id"]) - set(diagnosis_patients["patient_id"])
-    )
-    report.add(
-        "nodule_diagnoses_have_patient_record",
-        not orphan_nodule_diagnoses,
-        len(orphan_nodule_diagnoses),
-        0,
-        json.dumps(orphan_nodule_diagnoses[:10]),
-    )
     return report.frame()
 
 
@@ -251,8 +251,6 @@ def validate_processed_files(config: AnalysisConfig) -> pd.DataFrame:
         tables["annotations"],
         tables["segmentations"],
         tables["nodules"],
-        tables["diagnosis_patients"],
-        tables["diagnosis_nodules"],
         config,
     )
 
@@ -263,8 +261,6 @@ def processed_paths(config: AnalysisConfig) -> dict[str, Path]:
         "annotations": base / "annotations.parquet",
         "segmentations": base / "segmentations.parquet",
         "nodules": base / "nodules.parquet",
-        "diagnosis_patients": base / "diagnosis_patients.parquet",
-        "diagnosis_nodules": base / "diagnosis_nodules.parquet",
     }
 
 
