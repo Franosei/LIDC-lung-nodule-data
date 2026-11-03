@@ -39,6 +39,15 @@
   },
   "platform": "Windows-11-10.0.26200-SP0",
   "python": "3.14.5 (tags/v3.14.5:5607950, May 10 2026, 10:43:50) [MSC v.1944 64 bit (AMD64)]",
+  "release_source": {
+    "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+    "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
+    "git_revision": "98a35032531825c679ba643c35a8408bc15c8ea7",
+    "git_tag": "analysis-source-v1",
+    "git_worktree_dirty": false,
+    "output_hashes_verified": true,
+    "source_snapshot_verified": true
+  },
   "stage": "ingestion",
   "validation": {
     "checks": 42,

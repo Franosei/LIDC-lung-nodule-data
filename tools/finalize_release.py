@@ -85,6 +85,7 @@ def finalize(tag: str) -> Path:
         manifest["release_source"] = {
             "git_revision": revision,
             "git_tag": tag,
+            "git_worktree_dirty": False,
             "analysis_code_sha256": current_code_hash,
             "config_sha256": current_config_hash,
             "source_snapshot_verified": True,

@@ -1,0 +1,258 @@
+{
+  "analysis_code_sha256": "898e9276305ecb99c6177e9ccf1ea2e378650b2fd2ee2cd7472f14a7d2adfae8",
+  "analysis_source_git_revision": "98a35032531825c679ba643c35a8408bc15c8ea7",
+  "config_sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb",
+  "historical_execution_note": "The original run manifests correctly recorded a dirty worktree. The release_source block binds the unchanged executed analysis code to this clean Git snapshot; models were not refitted.",
+  "release_manifest_sha256": {
+    "data/processed/ingestion_manifest.json": "067bb4aab30fe79dbdf228fd37c88f39b289cb7e4ded73dcac67e9dede67c429",
+    "results/label_case_effects/manifest.json": "6e1184de1f4c341c334dc7deaaac801e3d2c4ab4a89cbf6afb0f712bc9146563",
+    "results/publication/manifest.json": "3cdcc261b9c478d13d49d67e7a393039690a352f044b0b25e883101081dbccc7",
+    "results/shared_assessment/manifest.json": "23b006fa3585f37305e9c3b8fe20e87fcca28b0f8288b0444afd217e8930619c"
+  },
+  "release_tag": "analysis-source-v1",
+  "source_files": [
+    {
+      "path": "config/analysis.toml",
+      "sha256": "2f2adb932b989e1d3f77f5d9c7c66a209d04118f9a86ef571d0b18e3db114adb"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "f013e0785db9937647cfdf16c21e30711762ba931375ef0e465854a913aac1d9"
+    },
+    {
+      "path": "src/lidc_bias/__init__.py",
+      "sha256": "0523422664411d1f0e017cc027bac2c83257fdad82ebf1372a1dcd6142982473"
+    },
+    {
+      "path": "src/lidc_bias/__main__.py",
+      "sha256": "52635029c889b0dfc9233b9d9ac40b124e109fab354c85a4110abf793be84991"
+    },
+    {
+      "path": "src/lidc_bias/bootstrap.py",
+      "sha256": "7582c02bf1b9d902062b77ec553d443bd91b043e55669f7ff99c9a46e3b57ead"
+    },
+    {
+      "path": "src/lidc_bias/cli.py",
+      "sha256": "ecc5a69d789361d14e132e91625dfeaaca35b0d9a0af42caf88ad9db20104ba0"
+    },
+    {
+      "path": "src/lidc_bias/config.py",
+      "sha256": "e2779983e4ccfb173c5c24d0d6fc7db8e09fa9dd5f5453d93af603aef9e232e8"
+    },
+    {
+      "path": "src/lidc_bias/dicom_sr.py",
+      "sha256": "5082ca4812e55eaf85d501fc9f18955fd03f0056e9bf5e274585cec12bc57924"
+    },
+    {
+      "path": "src/lidc_bias/errors.py",
+      "sha256": "874dd266b1d92a5cbbc94f4a6085022d8b3fb89acbb2f7e8dd979dfe7e2e9a6e"
+    },
+    {
+      "path": "src/lidc_bias/exploratory/__init__.py",
+      "sha256": "a181738ebe7f4c465449fb0bd1df84d3b9b3833cf74aa2a9e7e917fa2ce98df2"
+    },
+    {
+      "path": "src/lidc_bias/exploratory/latent_class.py",
+      "sha256": "dc1d3d4fd0b81b97d1dec7e81f75cf5edb4c9d1527c5be064ad6369cacceba70"
+    },
+    {
+      "path": "src/lidc_bias/ingestion.py",
+      "sha256": "9d246b0fb7cb72a9f7f3cfb343ff6c1b6784c1160c72263d02d988588c60cfcc"
+    },
+    {
+      "path": "src/lidc_bias/label_case_effects.py",
+      "sha256": "37e98d804f3027138b6f4dc682cec8f88fde4b58c64cd6fa3c38855eb638e9f7"
+    },
+    {
+      "path": "src/lidc_bias/modelling.py",
+      "sha256": "62eb70e4f8d62d38e28c393b478e91e519ae51e3122aa034f7be4bcb09ab6cb4"
+    },
+    {
+      "path": "src/lidc_bias/provenance.py",
+      "sha256": "950b06d596d4931a22e0dafa483039cbd48efed62bf39964ff2b7eac625ba96b"
+    },
+    {
+      "path": "src/lidc_bias/publication.py",
+      "sha256": "8edd7713c69fb599a8bdf577a4075dc85037b4c7d35541b4b32b48f1a901f532"
+    },
+    {
+      "path": "src/lidc_bias/ratings.py",
+      "sha256": "c00cb80f28c70c10b96f1ee43ecc2e0afad85b48633c0b337a821f1dbe9410e7"
+    },
+    {
+      "path": "src/lidc_bias/references.py",
+      "sha256": "a2becb259be454c301b9c43036124ab274339ffa4be4aeb181fb8d1dfd928238"
+    },
+    {
+      "path": "src/lidc_bias/shared_assessment.py",
+      "sha256": "ca1cbc3ea4e8dc6b85ffcda00a724dc7d621f0dbd44c1e50716936b938328f5b"
+    },
+    {
+      "path": "src/lidc_bias/tables.py",
+      "sha256": "9edf66c13760f2019b0f0127f355b53e4ea96a88cd31e665c52a3e61adbab2ef"
+    },
+    {
+      "path": "src/lidc_bias/validation.py",
+      "sha256": "ef96e264b5fcf14829250299b9a86059750606577edc55e04c9e84e027e6f2ad"
+    }
+  ],
+  "verified_at_utc": "2026-11-03T08:21:11.467859+00:00",
+  "verified_outputs": [
+    {
+      "output": "annotations",
+      "path": "data/processed/annotations.parquet",
+      "sha256": "59120b0dd79fbb32f18368edd83f8ef58e8a13ff3cfdf2461137f571b2029d01",
+      "stage": "ingestion"
+    },
+    {
+      "output": "nodules",
+      "path": "data/processed/nodules.parquet",
+      "sha256": "34ec1d30a0b0e9688206f873b2c3df1c7086d32a2326ab58a72ecea0968ee950",
+      "stage": "ingestion"
+    },
+    {
+      "output": "segmentations",
+      "path": "data/processed/segmentations.parquet",
+      "sha256": "ec85a48f87d84ab778705348e32cd3beba115b1e3b7a2e88cc345b90f558dbc8",
+      "stage": "ingestion"
+    },
+    {
+      "output": "bootstrap_replicates",
+      "path": "results/label_case_effects/bootstrap_replicates.parquet",
+      "sha256": "9a9cc21a9c801de0f27305ea46f9c06883b6df15b0a57ee22d82890e3212466d",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "case_list",
+      "path": "results/label_case_effects/case_list.csv",
+      "sha256": "9ac15b603b11e30485e025d140cb6bf7b61dabe22d496d958cacb2e82e1ebedc",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "effects",
+      "path": "results/label_case_effects/effects.csv",
+      "sha256": "fbc2dfbae3d728d3058e8860daeffcea740efbdcd53e0c3d203ba3e4ecf24e99",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "partitions",
+      "path": "results/label_case_effects/partitions.csv",
+      "sha256": "7670756ca6cf6a521a4fd0642312af086c3db40acb59da872be9c80a08098260",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "performance",
+      "path": "results/label_case_effects/performance.csv",
+      "sha256": "f8d7c96b231726aecebd2816938e6818d51c7371a82dff17f8bd42f71d2be50f",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "predictions",
+      "path": "results/label_case_effects/predictions.parquet",
+      "sha256": "bc9155f03832c51c51784fbaa150ef2ffe8fcebf479e40eb01862ed791f6bbc3",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "reference_definitions",
+      "path": "results/label_case_effects/reference_definitions.csv",
+      "sha256": "71e29f06baad1ed1c78d2b2081ab0f3bc89b8aadcc9f82b651f15c996e59f7a2",
+      "stage": "label_case_effects"
+    },
+    {
+      "output": "assignment_effects",
+      "path": "results/shared_assessment/assignment_effects.csv",
+      "sha256": "4aecd01931a07a69e15ebd85f11145d3479de8970ce90120c21559000308ba55",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "assignments",
+      "path": "results/shared_assessment/assignments.parquet",
+      "sha256": "e770c9a4ea9f0a30556ec9dd05de89978f0515e2646825994e6c60ca37dba9b0",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "averaged_predictions",
+      "path": "results/shared_assessment/averaged_predictions.parquet",
+      "sha256": "4b40ef2b4ef0435615d9292df0168ad241d313f52ef347b81def417305dac192",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "bootstrap_replicates",
+      "path": "results/shared_assessment/bootstrap_replicates.parquet",
+      "sha256": "788db24a2f0e608756c65956bb32b0bdc22decffd031c37324713c194a9e3690",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "directional_assignment_effects",
+      "path": "results/shared_assessment/directional_assignment_effects.csv",
+      "sha256": "1f945cd5f92bf84c6c50b5b00f0e57276002aede381e7a8484e9ed7463863506",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "effect_summary",
+      "path": "results/shared_assessment/effect_summary.csv",
+      "sha256": "253db92947965f736f5c6aac65cab8604e145d82d77d06d5347f280447054243",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "partition_effects",
+      "path": "results/shared_assessment/partition_effects.csv",
+      "sha256": "e7999f0f855086a0c3a5162645e7e2c43edc5b40958cce61f7e43379f12ccf1d",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "partitions",
+      "path": "results/shared_assessment/partitions.csv",
+      "sha256": "3635a70c7c81063c2dbad96de441456018a1e2e276f26b036701e6592c9c8fa6",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "predictions",
+      "path": "results/shared_assessment/predictions.parquet",
+      "sha256": "bffca04602761571c1001db36a7bc13535c40c7a8c7a6235da21dcb0d3311d27",
+      "stage": "shared_assessment"
+    },
+    {
+      "output": "figure_caption",
+      "path": "results/publication/figure_1_caption.md",
+      "sha256": "a564a6526b54eb94102c3ad800b40e676a2c6d643d7b26296330911218b6def6",
+      "stage": "publication"
+    },
+    {
+      "output": "figure_pdf",
+      "path": "results/publication/figure_1_annotation_effects.pdf",
+      "sha256": "7d0d004ef9bc4195df34b0e9600918f56779a7520c80b690f73536de8194a41d",
+      "stage": "publication"
+    },
+    {
+      "output": "figure_png",
+      "path": "results/publication/figure_1_annotation_effects.png",
+      "sha256": "58239c7829b3aa12819cb888df6154288a7090a0807fab13df958035efdc29b8",
+      "stage": "publication"
+    },
+    {
+      "output": "figure_svg",
+      "path": "results/publication/figure_1_annotation_effects.svg",
+      "sha256": "fc330f4842906028be50e1be2d3b720b297b768378e7291c67ad041236778f56",
+      "stage": "publication"
+    },
+    {
+      "output": "figure_tiff",
+      "path": "results/publication/figure_1_annotation_effects.tiff",
+      "sha256": "0f21dd0176e38c6724330a76855ea43c5b5d138df68cd8ee2c637840cd29a91c",
+      "stage": "publication"
+    },
+    {
+      "output": "table_1",
+      "path": "results/publication/table_1_reference_definitions.csv",
+      "sha256": "7d3bf9653aa3e4f945eb412fff4740aa77a13fb546d9083adfe8a00f12ab987e",
+      "stage": "publication"
+    },
+    {
+      "output": "table_2",
+      "path": "results/publication/table_2_shared_assessment_effects.csv",
+      "sha256": "10102520d6e1710dbb8870ca2fd424b3be3935631b257f215e69934169b8ae72",
+      "stage": "publication"
+    }
+  ]
+}
