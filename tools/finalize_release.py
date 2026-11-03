@@ -97,6 +97,10 @@ def finalize(tag: str) -> Path:
 
     release_dir = PROJECT_ROOT / "release"
     record_path = release_dir / "analysis_source_release.json"
+    manifest_hashes = {
+        path.relative_to(PROJECT_ROOT).as_posix(): sha256_file(path)
+        for path, _ in updated_manifests
+    }
     record = {
         "release_tag": tag,
         "analysis_source_git_revision": revision,
@@ -110,14 +114,8 @@ def finalize(tag: str) -> Path:
         ),
         "source_files": _source_inventory(config_path),
         "verified_outputs": verified_outputs,
+        "release_manifest_sha256": manifest_hashes,
     }
-    write_json(record_path, record)
-
-    manifest_hashes = {
-        path.relative_to(PROJECT_ROOT).as_posix(): sha256_file(path)
-        for path, _ in updated_manifests
-    }
-    record["release_manifest_sha256"] = manifest_hashes
     write_json(record_path, record)
     return record_path
 
